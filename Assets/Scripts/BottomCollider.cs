@@ -3,7 +3,6 @@ using System.Collections;
 
 public class BottomCollider : MonoBehaviour {
 
-	private int lastLayer;
 
 	// Use this for initialization
 	void Start () {
@@ -19,12 +18,12 @@ public class BottomCollider : MonoBehaviour {
 	{
 		if (coll.gameObject.tag == "Player")
 		{
-			Debug.Log ("BOTTOM IN: " + coll.gameObject.layer);
+			//Debug.Log (Time.time + " >> BOTTOM IN: " + coll.gameObject.layer);
 			if (coll.gameObject.layer == 21)
 			{
 				return;
 			}
-			lastLayer = coll.gameObject.layer;
+			coll.gameObject.GetComponent<PlayerController>().LastLayer = coll.gameObject.layer;
 			coll.gameObject.layer =  21;
 		}
 	}
@@ -33,8 +32,8 @@ public class BottomCollider : MonoBehaviour {
 	{
 		if (coll.gameObject.tag == "Player")
 		{
-			Debug.Log("BOTTOM OUT :" + lastLayer);
-			coll.gameObject.layer = lastLayer;
+			//Debug.Log(Time.time + " >> BOTTOM OUT :" + coll.gameObject.GetComponent<PlayerController>().LastLayer);
+			coll.gameObject.layer = coll.gameObject.GetComponent<PlayerController>().LastLayer;
 		}
 	}
 }
