@@ -13,8 +13,9 @@ public class PlayerController : MonoBehaviour {
 	private float targetSpeed;
 	private Vector2 amountToMove;
 
-	[HideInInspector]
 	public bool Grounded = false;
+	private bool stunned = false;
+	private float stunnedTimer = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -23,11 +24,22 @@ public class PlayerController : MonoBehaviour {
 
 	void Update()
 	{
+		if(stunned)
+			stunnedTimer -= Time.deltaTime;
 
+		if(stunnedTimer <= 0.0f){
+			stunned = false;
+		}
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
+		if(!stunned){
+			HandleMovement();
+		}
+	}
+
+	void HandleMovement(){
 		if(Grounded)
 		{
 			//Jump
@@ -35,12 +47,12 @@ public class PlayerController : MonoBehaviour {
 			{
 				Grounded = false;
 				rigidbody2D.AddForce(new Vector3(0, JumpHeight, 0));
-
+				
 			}
 		}
 		//Input
 		targetSpeed = Input.GetAxis ("LeftAnalogX_"+PNumber) * Speed;
-
+		
 		//Set Amount to move
 		amountToMove.x = targetSpeed; 
 		//rigidbody2D.AddForce(amountToMove);
@@ -53,5 +65,10 @@ public class PlayerController : MonoBehaviour {
 		{
 			Grounded = true;
 		}
+	}
+
+	void Stun(float stunTime){
+		stunned = true;
+		stunnedTimer = stunTime;
 	}
 }
