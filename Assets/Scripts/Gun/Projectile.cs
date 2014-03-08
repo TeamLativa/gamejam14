@@ -29,11 +29,12 @@ public class Projectile : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2d(Collider2D collider)
+	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collider.gameObject.tag == "Enemy")
+		if (collision.gameObject.tag == "Enemy")
 		{
-			collider.gameObject.SendMessage("TakeDamage", Damage);
+			Debug.Log("Do Ouch");
+			collision.gameObject.SendMessage("TakeDamage", Damage);
 		}
 	}
 
