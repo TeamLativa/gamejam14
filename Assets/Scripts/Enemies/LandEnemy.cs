@@ -59,6 +59,19 @@ public class LandEnemy : MonoBehaviour {
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D coll){
+		if(coll.gameObject.tag == "Wall" || coll.gameObject.tag == "PlatformSide" || coll.gameObject.tag == "Player"){
+			if(coll.gameObject != lastCollidedWall){
+				lastCollidedWall = coll.gameObject;
+				direction = -direction;
+				Flip();
+			}
+			if(coll.gameObject.tag == "Player"){
+				coll.gameObject.SendMessage("Stun", PlayerStunTime);
+			}
+		}
+	}
+
 	void Flip(){
 		Vector3 scale = transform.localScale;
 		scale.x *= -1;
