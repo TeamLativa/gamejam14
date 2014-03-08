@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour {
 
 
 		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) || Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Platforms")); 
-		if((Input.GetButtonDown("Abutton_"+PNumber || Input.GetButtonDown("LeftBumper_"+PNumber)) && grounded && !stunned)
+		if((Input.GetButtonDown("Abutton_"+PNumber) || Input.GetButtonDown("LeftBumper_"+PNumber)) && grounded && !stunned)
 			jump = true;
 
 
