@@ -51,12 +51,17 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 		//Input
-		targetSpeed = Input.GetAxis ("LeftAnalogX_"+PNumber) * Speed;
-		
-		//Set Amount to move
-		amountToMove.x = targetSpeed; 
-		//rigidbody2D.AddForce(amountToMove);
-		transform.position += new Vector3(targetSpeed, 0, 0) * Time.deltaTime;
+
+		float axisH = Input.GetAxisRaw ("LeftAnalogX_"+PNumber);
+		if (Mathf.Abs(axisH)>0.01)
+		{
+			targetSpeed = axisH * Speed;
+
+			//Set Amount to move
+			amountToMove.x = targetSpeed; 
+			//rigidbody2D.AddForce(amountToMove);
+			transform.position += new Vector3(targetSpeed, 0, 0) * Time.deltaTime;
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
