@@ -7,6 +7,8 @@ public class Projectile : MonoBehaviour {
 
 	public float MaxDistance = 18.0f;
 
+	public int Damage = 1;
+
 	Vector3 initialPosition;
 
 
@@ -26,4 +28,13 @@ public class Projectile : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
+
+	void OnCollisionEnter2d(Collider2D collider)
+	{
+		if ( collider.gameObject.tag == "Enemy")
+		{
+			collider.gameObject.SendMessage("TakeDamage", Damage);
+		}
+	}
+
 }
