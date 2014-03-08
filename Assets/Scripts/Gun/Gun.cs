@@ -3,11 +3,16 @@ using System.Collections;
 
 public class Gun : MonoBehaviour {
 	
-	public GameObject Proj;
+	private GameObject Proj;
+	public GameObject NormalProj;
+	public GameObject SmallStunningProj;
+	public GameObject BigStunningProj;
 	public float RotationSpeed = 1;
 
 	public float FireRate = 0.05f;
 	private float fireTimer = 0.0f;
+
+	private float projectileTimer = 0.0f;
 
 	private string pNumber;
 	
@@ -15,6 +20,7 @@ public class Gun : MonoBehaviour {
 	void Start () {
 		
 		pNumber = transform.parent.GetComponent<PlayerController>().PNumber;
+		Proj = NormalProj;
 	}
 	
 	// Update is called once per frame
@@ -22,6 +28,42 @@ public class Gun : MonoBehaviour {
 
 		RotateGun();
 		Fire();
+		VerifyProjectileTimer();
+	}
+
+	public void ChangeProjectile(int projNb)
+	{
+		switch(projNb)
+		{
+		case 0:
+			Proj = NormalProj;
+			break;
+		case 1:
+			Proj = SmallStunningProj;
+			SetProjectileTimer(4.0f);
+			break;
+		case 2:
+			Proj = BigStunningProj;
+			SetProjectileTimer(6.0f);
+			break;
+		}
+	}
+
+	void SetProjectileTimer(float time)
+	{
+		projectileTimer = time;
+	}
+
+	void VerifyProjectileTimer()
+	{
+		if(projectileTimer > 0.0f){
+			projectileTimer -= Time.deltaTime;
+			if(projectileTimer <= 0)
+			{
+				Proj = NormalProj;
+				projectileTimer = 0.0f;
+			}
+		}
 	}
 
 	void RotateGun()

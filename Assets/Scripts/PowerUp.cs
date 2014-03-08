@@ -25,8 +25,8 @@ public class PowerUp : MonoBehaviour {
 		if(col.gameObject.name == "Player")
 		{
 			playerInventory = col.gameObject.GetComponent<PlayerInventoryPowerUp>();
-			Destroy(gameObject);
 			playerInventory.AddPowerUp(gameObject);
+			Destroy(gameObject);
 		}
 	}
 }

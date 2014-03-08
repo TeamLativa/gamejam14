@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class PlayerInventoryPowerUp : MonoBehaviour {
 
-	private GameObject powerUp1, powerUp2;
+	private string powerUp1, powerUp2;
 	private int nbPowerUp;
 
 	private SpriteRenderer rendererPU1;
@@ -29,7 +29,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 
 	public void AddPowerUp(GameObject pUp){
 		if(nbPowerUp == 0){
-			powerUp1 = pUp;
+			powerUp1 = pUp.name;
 			nbPowerUp++;
 
 			if(pUp.name == "ForcePowerUp")
@@ -42,7 +42,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 			return;
 		}
 		if(nbPowerUp == 1){
-			powerUp2 = pUp;
+			powerUp2 = pUp.name;
 			nbPowerUp++;
 
 			if(pUp.name == "ForcePowerUp")
@@ -56,7 +56,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 		}
 		if(nbPowerUp == 2){
 			powerUp1 = powerUp2;
-			powerUp2 = pUp;
+			powerUp2 = pUp.name;
 
 			rendererPU1.sprite = rendererPU2.sprite;
 			if(pUp.name == "ForcePowerUp")
@@ -71,32 +71,33 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 
 	public bool ConsumePowerUps(){
+		Debug.Log(nbPowerUp);
 		if(nbPowerUp == 0)
 			return false;
 		else
 		{
 			if(nbPowerUp == 1)
 			{
-				if(powerUp1.name == "ForcePowerUp")
+				if(powerUp1 == "ForcePowerUp")
 					PUForce();
-				if(powerUp1.name == "BouclierPowerUp")
+				if(powerUp1 == "BouclierPowerUp")
 					PUBouclier();
-				if(powerUp1.name == "VitessePowerUp")
+				if(powerUp1 == "VitessePowerUp")
 					PUVitesse();
 			}
 			if(nbPowerUp == 2)
 			{
-				if(powerUp1.name == "ForcePowerUp" && powerUp2.name == "ForcePowerUp")
+				if(powerUp1 == "ForcePowerUp" && powerUp2 == "ForcePowerUp")
 					PUForceForce();
-				if((powerUp1.name == "ForcePowerUp" && powerUp2.name == "BouclierPowerUp") || (powerUp2.name == "ForcePowerUp" && powerUp1.name == "BouclierPowerUp"))
+				if((powerUp1 == "ForcePowerUp" && powerUp2 == "BouclierPowerUp") || (powerUp2 == "ForcePowerUp" && powerUp1 == "BouclierPowerUp"))
 					PUForceBouclier();
-				if((powerUp1.name == "ForcePowerUp" && powerUp2.name == "VitessePowerUp") || (powerUp2.name == "ForcePowerUp" && powerUp1.name == "VitessePowerUp"))
+				if((powerUp1 == "ForcePowerUp" && powerUp2 == "VitessePowerUp") || (powerUp2 == "ForcePowerUp" && powerUp1 == "VitessePowerUp"))
 					PUForceVitesse();
-				if(powerUp1.name == "BouclierPowerUp" && powerUp2.name == "BouclierPowerUp")
+				if(powerUp1 == "BouclierPowerUp" && powerUp2 == "BouclierPowerUp")
 					PUBouclierBouclier();
-				if((powerUp1.name == "BouclierPowerUp" && powerUp2.name == "VitessePowerUp") || (powerUp2.name == "BouclierPowerUp" && powerUp1.name == "VitessePowerUp"))
+				if((powerUp1 == "BouclierPowerUp" && powerUp2 == "VitessePowerUp") || (powerUp2 == "BouclierPowerUp" && powerUp1 == "VitessePowerUp"))
 					PUBouclierVitesse();
-				if(powerUp1.name == "VitessePowerUp" && powerUp2.name == "VitessePowerUp")
+				if(powerUp1 == "VitessePowerUp" && powerUp2 == "VitessePowerUp")
 					PUVitesseVitesse();
 			}
 			nbPowerUp = 0;
@@ -113,20 +114,21 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 
 	public string GetFirstPowerUpName(){
 		if(nbPowerUp >= 1)
-			return powerUp1.name;
+			return powerUp1;
 		else
 			return "";
 	}
 
 	public string GetSecondPowerUpName(){
 		if(nbPowerUp == 2)
-			return powerUp2.name;
+			return powerUp2;
 		else
 			return "";
 	}
 
 	private void PUForce()
 	{
+		gameObject.GetComponentInChildren<Gun>().ChangeProjectile(1);
 	}
 	private void PUBouclier()
 	{
@@ -136,6 +138,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUForceForce()
 	{
+		gameObject.GetComponentInChildren<Gun>().ChangeProjectile(2);
 	}
 	private void PUForceBouclier()
 	{

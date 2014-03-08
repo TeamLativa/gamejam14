@@ -23,7 +23,10 @@ public class PlayerController : MonoBehaviour {
 
 	void Update()
 	{
-
+		if(Input.GetButtonDown("Xbutton_"+PNumber))
+		{
+			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
+		}
 	}
 
 	// Update is called once per frame
