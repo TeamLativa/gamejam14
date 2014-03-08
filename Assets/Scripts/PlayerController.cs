@@ -71,7 +71,8 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if(!stunned) {
+		if(!stunned) 
+		{
 			if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")
 			    || (collision.gameObject.tag == "PlatformTotem")) 
 			{
@@ -118,6 +119,9 @@ public class PlayerController : MonoBehaviour {
 						Instantiate(TotemPart6, TotemPart6.transform.position, Quaternion.identity);
 						partNumber = 5;
 						break;
+					}
+
+				
 				}
 
 				if(Input.GetButtonDown("Abutton_"+PNumber))
