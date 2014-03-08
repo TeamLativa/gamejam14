@@ -41,7 +41,7 @@ public class Gun : MonoBehaviour {
 	{
 		fireTimer += Time.deltaTime;
 
-		if (Input.GetMouseButtonDown(0) && fireTimer >= FireRate) {
+		if (Input.GetMouseButton(0) && fireTimer >= FireRate) {
 			// Instantiate the projectile at the position and rotation of this transform
 			GameObject proj = (GameObject) Instantiate(Proj, transform.position, Quaternion.identity);
 			
