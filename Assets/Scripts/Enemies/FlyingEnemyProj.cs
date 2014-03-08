@@ -16,7 +16,7 @@ public class FlyingEnemyProj : MonoBehaviour {
 			Destroy(gameObject);
 	}
 
-	void OnTriggerEnter2d(Collider2D coll){
+	void OnTriggerEnter2D(Collider2D coll){
 		if(coll.gameObject.tag == "Player"){
 			print ("Collided!");
 			coll.gameObject.SendMessage("Stun", StunTime);
