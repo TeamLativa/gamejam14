@@ -25,17 +25,15 @@ public class PlayerController : MonoBehaviour {
 	private bool stunned = false;
 	private float stunnedTimer = 0.0f;
 
-<<<<<<< HEAD
 	private bool jump = false;	
 	private bool grounded = false;			// Whether or not the player is grounded.
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
-=======
+
 	private float speedTimer = 0.0f;
 	private float baseSpeed;
 
 	private float jumpTimer = 0.0f;
 	private float baseJumpHeight;
->>>>>>> 47acfb5fc8414bc80bf849d1f82de7e4c2ecc6f4
 
 	public int LastLayer;
 
