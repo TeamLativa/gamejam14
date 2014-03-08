@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BouclierSimple : MonoBehaviour {
-
+public class BouclierFeu : MonoBehaviour {
+	
 	// Use this for initialization
 	void Start () {
 		Destroy(gameObject, 10.0f);
@@ -10,14 +10,19 @@ public class BouclierSimple : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
-
+	
 	void OnTriggerEnter2D(Collider2D coll) // DEUX L
 	{
 		if (coll.gameObject.tag == "Projectile" || coll.gameObject.tag == "EnemyProjectile")
 		{
 			Destroy(coll.gameObject);
+		}
+
+		if(coll.gameObject.tag == "Player")
+		{
+			coll.gameObject.SendMessage("Stun",2.0f);
 		}
 	}
 }
