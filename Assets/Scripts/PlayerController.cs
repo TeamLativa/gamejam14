@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 	private float currentSpeed;
 	private float targetSpeed;
 	private Vector2 amountToMove;
+	private bool isOnTotemSpot;
 
 	[HideInInspector]
 	public bool Grounded = false;
@@ -26,13 +27,27 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
+		//drop component for totem
+		if(Input.GetButtonDown("Fire1"))
+		{
+			if (isOnTotemSpot)
+			{
+				//add things to totem
+
+
+
+			}
+		}
+
 		if(Grounded)
 		{
 			//Jump
 			if(Input.GetButtonDown("Jump"))
-			{Grounded = false;
-				rigidbody2D.AddForce(new Vector3(0, JumpHeight, 0));
+			{
 
+				rigidbody2D.AddForce(new Vector3(0, JumpHeight, 0));
+				Grounded = false;
+				isOnTotemSpot = false;
 			}
 		}
 		//Input
@@ -46,8 +61,14 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "Platform")) 
+		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")) 
 		{
+			Grounded = true;
+		}
+
+		if (collision.gameObject.name == "TopColliderTotem") 
+		{
+			isOnTotemSpot = true;
 			Grounded = true;
 		}
 	}
