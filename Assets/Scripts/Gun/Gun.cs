@@ -11,6 +11,8 @@ public class Gun : MonoBehaviour {
 
 	private string pNumber;
 
+	public PlayerController ParentPlayerController;
+
 	// C'est tellemet hot des variables globales
 	private float prevAngle = 0;
 	private bool rotating = false;
@@ -18,15 +20,16 @@ public class Gun : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		ParentPlayerController = transform.parent.gameObject.GetComponent<PlayerController>();
 		pNumber = transform.parent.GetComponent<PlayerController>().PNumber;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		RotateGun();
-		Fire();
+		if(!ParentPlayerController.IsStunned()){
+			RotateGun();
+			Fire();
+		}
 	}
 
 	void RotateGun()

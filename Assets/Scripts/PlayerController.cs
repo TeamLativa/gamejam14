@@ -82,7 +82,9 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-
+	public bool IsStunned(){
+		return stunned;
+	}
 
 	void Stun(float stunTime){
 		stunned = true;
