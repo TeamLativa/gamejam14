@@ -57,25 +57,27 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")
-		    || (collision.gameObject.tag == "PlatformTotem")) 
-		{
-			//
-			if(Input.GetButtonDown("Xbutton_"+PNumber))
+		if(!stunned) {
+			if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")
+			    || (collision.gameObject.tag == "PlatformTotem")) 
 			{
-				if (collision.gameObject.tag == "PlatformTotem")
+				//
+				if(Input.GetButtonDown("Xbutton_"+PNumber))
 				{
-					//add things to totem
-					//if(player got all items to add a part)
-					//instantiate(blueTotem, blueTotem.transform.position, Quaternion.identity);
-					Debug.Log ("IM adding parts to the totem!");
+					if (collision.gameObject.tag == "PlatformTotem")
+					{
+						//add things to totem
+						//if(player got all items to add a part)
+						//instantiate(blueTotem, blueTotem.transform.position, Quaternion.identity);
+						Debug.Log ("IM adding parts to the totem!");
+					}
 				}
-			}
 
-			if(Input.GetButtonDown("Abutton_"+PNumber))
-			{
-				rigidbody2D.AddForce(Vector3.up * JumpHeight);
-				
+				if(Input.GetButtonDown("Abutton_"+PNumber))
+				{
+					rigidbody2D.AddForce(Vector3.up * JumpHeight);
+					
+				}
 			}
 		}
 	}
