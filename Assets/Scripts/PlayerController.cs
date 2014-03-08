@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour {
 	private bool stunned = false;
 	private float stunnedTimer = 0.0f;
 
+	public int LastLayer;
+
 	// Use this for initialization
 	void Start () {
 
