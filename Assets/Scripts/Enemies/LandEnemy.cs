@@ -13,6 +13,7 @@ public class LandEnemy : MonoBehaviour {
 	public Transform SpawnPoints;
 	private Vector2 direction;
 	private GameObject lastCollidedWall;
+	public float PlayerStunTime = 1.0f;
 	
 	// Firing
 	public float FireRate = 3.0f;
@@ -51,6 +52,9 @@ public class LandEnemy : MonoBehaviour {
 				lastCollidedWall = coll.gameObject;
 				direction = -direction;
 				Flip();
+			}
+			if(coll.gameObject.tag == "Player"){
+				coll.gameObject.SendMessage("Stun", PlayerStunTime);
 			}
 		}
 	}

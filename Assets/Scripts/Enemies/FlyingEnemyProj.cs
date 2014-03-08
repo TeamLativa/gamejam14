@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FlyingEnemyProj : MonoBehaviour {
 
-	public float StunTime = 3.0f;
+	public float StunTime = 1.0f;
 
 	public GameObject CollisionParticule;
 
@@ -18,7 +18,6 @@ public class FlyingEnemyProj : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D coll){
 		if(coll.gameObject.tag == "Player"){
-			print ("Collided!");
 			coll.gameObject.SendMessage("Stun", StunTime);
 			Instantiate(CollisionParticule, coll.gameObject.transform.position, Quaternion.identity);
 			Destroy(gameObject);

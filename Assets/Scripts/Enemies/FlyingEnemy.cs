@@ -13,6 +13,7 @@ public class FlyingEnemy : MonoBehaviour {
 	private Transform waypoints;
 	private int nextWaypoint = 0;
 	private int currentWaypoint = 0;
+	public float PlayerStunTime = 1.0f;
 
 	// Firing
 	public float FireRate = 3.0f;
@@ -67,6 +68,12 @@ public class FlyingEnemy : MonoBehaviour {
 		if(fireTimer >= FireRate){
 			Instantiate(Projectile, transform.position, Quaternion.identity);
 			fireTimer = 0.0f;
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D coll){
+		if(coll.gameObject.tag == "Player"){
+			coll.gameObject.SendMessage("Stun", PlayerStunTime);
 		}
 	}
 

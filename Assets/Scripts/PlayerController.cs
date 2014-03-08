@@ -32,6 +32,11 @@ public class PlayerController : MonoBehaviour {
 
 	void Update()
 	{
+
+		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0)
+		{
+			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
+		}
 		if(stunned)
 			stunnedTimer -= Time.deltaTime;
 
@@ -66,13 +71,12 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")
-		    || (collision.gameObject.tag == "PlatformTotem")) 
-		{
-			//
-			if(Input.GetButtonDown("Xbutton_"+PNumber))
+		if(!stunned) {
+			if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")
+			    || (collision.gameObject.tag == "PlatformTotem")) 
 			{
-				if (collision.gameObject.tag == "PlatformTotem")
+				//
+				if(Input.GetButtonDown("Xbutton_"+PNumber))
 				{
 					//add things to totem
 					//if(player got all items to add a part)
@@ -114,19 +118,20 @@ public class PlayerController : MonoBehaviour {
 						Instantiate(TotemPart6, TotemPart6.transform.position, Quaternion.identity);
 						partNumber = 5;
 						break;
-					}
 				}
-			}
 
-			if(Input.GetButtonDown("Abutton_"+PNumber))
-			{
-				rigidbody2D.AddForce(Vector3.up * JumpHeight);
-				
+				if(Input.GetButtonDown("Abutton_"+PNumber))
+				{
+					rigidbody2D.AddForce(Vector3.up * JumpHeight);
+					
+				}
 			}
 		}
 	}
 
-
+	public bool IsStunned(){
+		return stunned;
+	}
 
 	void Stun(float stunTime){
 		stunned = true;
