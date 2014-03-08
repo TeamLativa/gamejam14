@@ -12,16 +12,12 @@ public class PlayerController : MonoBehaviour {
 	private float currentSpeed;
 	private float targetSpeed;
 	private Vector2 amountToMove;
-<<<<<<< HEAD
+
 	private bool isOnTotemSpot;
 
-	[HideInInspector]
-	public bool Grounded = false;
-=======
 	
 	private bool stunned = false;
 	private float stunnedTimer = 0.0f;
->>>>>>> 659948dcd13deb6bbb848f67d334191b2cd273c3
 
 	// Use this for initialization
 	void Start () {
@@ -40,7 +36,6 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-<<<<<<< HEAD
 		//drop component for totem
 		if(Input.GetButtonDown("Fire1"))
 		{
@@ -53,20 +48,8 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
-		if(Grounded)
-		{
-			//Jump
-			if(Input.GetButtonDown("Jump"))
-			{
-
-				rigidbody2D.AddForce(new Vector3(0, JumpHeight, 0));
-				Grounded = false;
-				isOnTotemSpot = false;
-			}
-=======
 		if(!stunned){
 			HandleMovement();
->>>>>>> 659948dcd13deb6bbb848f67d334191b2cd273c3
 		}
 
 	}
@@ -88,17 +71,12 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")) 
-<<<<<<< HEAD
-		{
-			Grounded = true;
-		}
 
-		if (collision.gameObject.name == "TopColliderTotem") 
-		{
-			isOnTotemSpot = true;
-			Grounded = true;
-=======
+
+		if (collision.gameObject.name == "TopColliderTotem") {
+						isOnTotemSpot = true;
+				}
+		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")) 
 		{
 			//
 			if(Input.GetButtonDown("Abutton_"+PNumber))
@@ -107,7 +85,6 @@ public class PlayerController : MonoBehaviour {
 				rigidbody2D.AddForce(Vector3.up * JumpHeight);
 				
 			}
->>>>>>> 659948dcd13deb6bbb848f67d334191b2cd273c3
 		}
 	}
 
