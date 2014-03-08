@@ -24,20 +24,49 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 	}
 
 	public void AddPowerUp(GameObject pUp){
 		if(nbPowerUp == 0){
 			powerUp1 = pUp;
 			nbPowerUp++;
+
+			if(pUp.name == "ForcePowerUp")
+				rendererPU1.sprite = ForceSprite;
+			if(pUp.name == "BouclierPowerUp")
+				rendererPU1.sprite = BouclierSprite;
+			if(pUp.name == "VitessePowerUp")
+				rendererPU1.sprite = VitesseSprite;
+
+			return;
 		}
 		if(nbPowerUp == 1){
 			powerUp2 = pUp;
 			nbPowerUp++;
+
+			if(pUp.name == "ForcePowerUp")
+				rendererPU2.sprite = ForceSprite;
+			if(pUp.name == "BouclierPowerUp")
+				rendererPU2.sprite = BouclierSprite;
+			if(pUp.name == "VitessePowerUp")
+				rendererPU2.sprite = VitesseSprite;
+
+			return;
 		}
 		if(nbPowerUp == 2){
 			powerUp1 = powerUp2;
 			powerUp2 = pUp;
+
+			rendererPU1.sprite = rendererPU2.sprite;
+			if(pUp.name == "ForcePowerUp")
+				rendererPU2.sprite = ForceSprite;
+			if(pUp.name == "BouclierPowerUp")
+				rendererPU2.sprite = BouclierSprite;
+			if(pUp.name == "VitessePowerUp")
+				rendererPU2.sprite = VitesseSprite;
+
+			return;
 		}
 	}
 
@@ -71,6 +100,8 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 					PUVitesseVitesse();
 			}
 			nbPowerUp = 0;
+			rendererPU1.sprite = null;
+			rendererPU2.sprite = null;
 			return true;
 		}
 		
