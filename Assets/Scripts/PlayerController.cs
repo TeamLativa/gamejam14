@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour {
 
 	public float Speed = 1f;
 	public int JumpHeight = 100;
+
+	public string PNumber;
 	
 	private float currentSpeed;
 	private float targetSpeed;
@@ -29,14 +31,15 @@ public class PlayerController : MonoBehaviour {
 		if(Grounded)
 		{
 			//Jump
-			if(Input.GetButtonDown("Jump"))
-			{Grounded = false;
+			if(Input.GetButtonDown("Abutton_"+PNumber))
+			{
+				Grounded = false;
 				rigidbody2D.AddForce(new Vector3(0, JumpHeight, 0));
 
 			}
 		}
 		//Input
-		targetSpeed = Input.GetAxis ("Horizontal") * Speed;
+		targetSpeed = Input.GetAxis ("LeftAnalogX_"+PNumber) * Speed;
 
 		//Set Amount to move
 		amountToMove.x = targetSpeed; 

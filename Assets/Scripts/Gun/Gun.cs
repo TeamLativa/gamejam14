@@ -8,10 +8,13 @@ public class Gun : MonoBehaviour {
 
 	public float FireRate = 0.05f;
 	private float fireTimer = 0.0f;
+
+	private string pNumber;
 	
 	// Use this for initialization
 	void Start () {
-	
+		
+		pNumber = transform.parent.GetComponent<PlayerController>().PNumber;
 	}
 	
 	// Update is called once per frame
@@ -23,10 +26,9 @@ public class Gun : MonoBehaviour {
 
 	void RotateGun()
 	{
-		float axisHorizontal = Input.GetAxis("Horizontal");
-		float axisVertical = Input.GetAxis("Vertical");
+		float axisHorizontal = Input.GetAxis("RightAnalogX_"+pNumber);
+		float axisVertical = Input.GetAxis("RightAnalogY_"+pNumber);
 		float angle = (Mathf.Atan2(axisHorizontal, axisVertical) * Time.deltaTime) *Mathf.Rad2Deg;
-		Debug.Log(angle);
 
 		if (angle != 0)
 		{
@@ -41,7 +43,7 @@ public class Gun : MonoBehaviour {
 	{
 		fireTimer += Time.deltaTime;
 
-		if (Input.GetMouseButton(0) && fireTimer >= FireRate) {
+		if (Input.GetAxis("RightTrigger_"+ pNumber) < 0 && fireTimer >= FireRate) {
 			// Instantiate the projectile at the position and rotation of this transform
 			GameObject proj = (GameObject) Instantiate(Proj, transform.position, Quaternion.identity);
 			
