@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
 	void Update()
 	{
 
-		if(Input.GetButtonDown("Xbutton_"+PNumber))
+		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0)
 		{
 			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
 		}
