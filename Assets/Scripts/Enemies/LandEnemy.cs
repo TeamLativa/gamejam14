@@ -46,7 +46,7 @@ public class LandEnemy : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll){
-		if(coll.gameObject.tag == "Wall" || coll.gameObject.tag == "PlatformSide"){
+		if(coll.gameObject.tag == "Wall" || coll.gameObject.tag == "PlatformSide" || coll.gameObject.tag == "Player"){
 			if(coll.gameObject != lastCollidedWall){
 				lastCollidedWall = coll.gameObject;
 				direction = -direction;
