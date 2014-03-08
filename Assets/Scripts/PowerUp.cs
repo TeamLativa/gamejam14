@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ForcePowerUp : MonoBehaviour {
+public class PowerUp : MonoBehaviour {
 
 	//public GameObject otherGameObject;
 	private PlayerInventoryPowerUp playerInventory;
@@ -22,11 +22,11 @@ public class ForcePowerUp : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
-		if(col.gameObject.name == "Ground")
+		if(col.gameObject.name == "Player")
 		{
 			playerInventory = col.gameObject.GetComponent<PlayerInventoryPowerUp>();
-			playerInventory.AddPowerUp(gameObject);
 			Destroy(gameObject);
+			playerInventory.AddPowerUp(gameObject);
 		}
 	}
 }
