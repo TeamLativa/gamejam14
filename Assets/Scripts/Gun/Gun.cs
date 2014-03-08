@@ -8,10 +8,18 @@ public class Gun : MonoBehaviour {
 
 	public float FireRate = 0.05f;
 	private float fireTimer = 0.0f;
+
+	private string pNumber;
+
+	// C'est tellemet hot des variables globales
+	private float prevAngle = 0;
+	private bool rotating = false;
 	
+
 	// Use this for initialization
 	void Start () {
-	
+		
+		pNumber = transform.parent.GetComponent<PlayerController>().PNumber;
 	}
 	
 	// Update is called once per frame
@@ -23,17 +31,37 @@ public class Gun : MonoBehaviour {
 
 	void RotateGun()
 	{
-		float axisHorizontal = Input.GetAxis("Horizontal");
-		float axisVertical = Input.GetAxis("Vertical");
-		float angle = (Mathf.Atan2(axisHorizontal, axisVertical) * Time.deltaTime) *Mathf.Rad2Deg;
-		Debug.Log(angle);
+		float axisHorizontal = Input.GetAxisRaw("RightAnalogX_"+pNumber);
+		//Debug.Log("X: "+axisHorizontal);
+		float axisVertical = Input.GetAxisRaw("RightAnalogY_"+pNumber);
+		//Debug.Log("Y: "+axisVertical);
 
-		if (angle != 0)
+
+
+		if (rotating)
 		{
 
-			transform.localEulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angle);
-			transform.localRotation = Quaternion.Euler(0.0f,0, (Mathf.Atan2(axisHorizontal, axisVertical) * Mathf.Rad2Deg));
-			transform.RotateAround(transform.parent.position, new Vector3(0, 0, 1.0f), angle);
+			if (Mathf.Abs(axisHorizontal) < 0.01 || Mathf.Abs(axisVertical) < 0.01)
+			{
+				rotating = false;
+				return;
+			}
+			float angle = Mathf.Atan2(axisVertical, axisHorizontal) * Mathf.Rad2Deg;
+			//Debug.Log("Angle: " + angle);
+
+			transform.RotateAround(transform.parent.position, Vector3.up, -(angle - prevAngle));
+
+			transform.localRotation = Quaternion.Euler(0.0f,0, -angle);
+			prevAngle = angle;
+
+		}
+		else
+		{
+			if (Mathf.Abs(axisHorizontal) > 0.1 || Mathf.Abs(axisVertical) > 0.1)
+			{
+				prevAngle = Mathf.Atan2(axisVertical, axisHorizontal) * Mathf.Rad2Deg;
+				rotating = true;
+			}
 		}
 	}
 
@@ -41,7 +69,7 @@ public class Gun : MonoBehaviour {
 	{
 		fireTimer += Time.deltaTime;
 
-		if (Input.GetMouseButton(0) && fireTimer >= FireRate) {
+		if (Input.GetAxis("RightTrigger_"+ pNumber) < 0 && fireTimer >= FireRate) {
 			// Instantiate the projectile at the position and rotation of this transform
 			GameObject proj = (GameObject) Instantiate(Proj, transform.position, Quaternion.identity);
 			
