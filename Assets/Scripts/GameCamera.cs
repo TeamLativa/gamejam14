@@ -25,8 +25,6 @@ public class GameCamera : MonoBehaviour {
 			dist.x = Mathf.Abs (dist.x);
 			dist.y = Mathf.Abs (dist.y);
 
-			Debug.Log (dist.y);
-
 			if (dist.y>minSize)
 			{
 				if (dist.y < maxSize)
