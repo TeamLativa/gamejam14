@@ -22,11 +22,11 @@ public class PowerUp : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
-		if(col.gameObject.name == "Player")
+		if(col.gameObject.tag == "Player")
 		{
 			playerInventory = col.gameObject.GetComponent<PlayerInventoryPowerUp>();
-			Destroy(gameObject);
 			playerInventory.AddPowerUp(gameObject);
+			Destroy(gameObject);
 		}
 	}
 }
