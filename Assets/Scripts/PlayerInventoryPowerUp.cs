@@ -71,7 +71,6 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 
 	public bool ConsumePowerUps(){
-		Debug.Log(nbPowerUp);
 		if(nbPowerUp == 0)
 			return false;
 		else
