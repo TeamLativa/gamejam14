@@ -15,20 +15,30 @@ public class Gun : MonoBehaviour {
 	private float projectileTimer = 0.0f;
 
 	private string pNumber;
+
+	public PlayerController ParentPlayerController;
+
+	// C'est tellemet hot des variables globales
+	private float prevAngle = 0;
+	private bool rotating = false;
 	
+
 	// Use this for initialization
 	void Start () {
-		
+		ParentPlayerController = transform.parent.gameObject.GetComponent<PlayerController>();
 		pNumber = transform.parent.GetComponent<PlayerController>().PNumber;
 		Proj = NormalProj;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if(!ParentPlayerController.IsStunned()){
 
-		RotateGun();
-		Fire();
+			RotateGun();
+			Fire();
+		}
 		VerifyProjectileTimer();
+
 	}
 
 	public void ChangeProjectile(int projNb)
@@ -63,21 +73,43 @@ public class Gun : MonoBehaviour {
 				Proj = NormalProj;
 				projectileTimer = 0.0f;
 			}
+
 		}
 	}
 
 	void RotateGun()
 	{
-		float axisHorizontal = Input.GetAxis("RightAnalogX_"+pNumber);
-		float axisVertical = Input.GetAxis("RightAnalogY_"+pNumber);
-		float angle = (Mathf.Atan2(axisHorizontal, axisVertical) * Time.deltaTime) *Mathf.Rad2Deg;
+		float axisHorizontal = Input.GetAxisRaw("RightAnalogX_"+pNumber);
+		//Debug.Log("X: "+axisHorizontal);
+		float axisVertical = Input.GetAxisRaw("RightAnalogY_"+pNumber);
+		//Debug.Log("Y: "+axisVertical);
 
-		if (angle != 0)
+
+
+		if (rotating)
 		{
 
-			transform.localEulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, angle);
-			transform.localRotation = Quaternion.Euler(0.0f,0, (Mathf.Atan2(axisHorizontal, axisVertical) * Mathf.Rad2Deg));
-			transform.RotateAround(transform.parent.position, new Vector3(0, 0, 1.0f), angle);
+			if (Mathf.Abs(axisHorizontal) < 0.01 || Mathf.Abs(axisVertical) < 0.01)
+			{
+				rotating = false;
+				return;
+			}
+			float angle = Mathf.Atan2(axisVertical, axisHorizontal) * Mathf.Rad2Deg;
+			//Debug.Log("Angle: " + angle);
+
+			transform.RotateAround(transform.parent.position, Vector3.up, -(angle - prevAngle));
+
+			transform.localRotation = Quaternion.Euler(0.0f,0, -angle);
+			prevAngle = angle;
+
+		}
+		else
+		{
+			if (Mathf.Abs(axisHorizontal) > 0.1 || Mathf.Abs(axisVertical) > 0.1)
+			{
+				prevAngle = Mathf.Atan2(axisVertical, axisHorizontal) * Mathf.Rad2Deg;
+				rotating = true;
+			}
 		}
 	}
 
