@@ -43,10 +43,11 @@ public class LandEnemy : MonoBehaviour {
 	
 	void HandleMovement(){
 		rigidbody2D.velocity = new Vector2(MovementSpeed * direction.x, rigidbody2D.velocity.y);
-		Debug.Log(direction);
+		//Debug.Log(direction);
 	}
 
 	void OnCollisionEnter2D(Collision2D coll){
+		//Debug.Log ("LOL COLLISION");
 		if(coll.gameObject.tag == "Wall" || coll.gameObject.tag == "PlatformSide"){
 			if(coll.gameObject != lastCollidedWall){
 				lastCollidedWall = coll.gameObject;
