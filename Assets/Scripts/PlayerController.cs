@@ -25,15 +25,20 @@ public class PlayerController : MonoBehaviour {
 	private bool stunned = false;
 	private float stunnedTimer = 0.0f;
 
+	private bool jump = false;	
+	private bool grounded = false;			// Whether or not the player is grounded.
+	private Transform groundCheck;			// A position marking where to check if the player is grounded.
+
 	public int LastLayer;
 
 	// Use this for initialization
 	void Start () {
-
+		groundCheck = transform.Find("GroundCheck");
 	}
 
 	void Update()
 	{
+		Physics2D.IgnoreLayerCollision(gameObject.layer, 9, rigidbody2D.velocity.y > 0);
 
 		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
 		{
@@ -45,13 +50,32 @@ public class PlayerController : MonoBehaviour {
 		if(stunnedTimer <= 0.0f){
 			stunned = false;
 		}
+
+
+
+		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) || Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Platforms")); 
+		if(Input.GetButtonDown("Abutton_"+PNumber) && grounded)
+			jump = true;
+
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
+
+
 		//drop component for totem
 		if(!stunned){
 			HandleMovement();
+		}
+
+		// If the player should jump...
+		if(jump)
+		{
+			// Add a vertical force to the player.
+			rigidbody2D.AddForce(new Vector2(0f, JumpHeight));
+			
+			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
+			jump = false;
 		}
 
 	}
@@ -71,7 +95,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2D(Collision2D collision)
+	/*void OnCollisionEnter2D(Collision2D collision)
 	{
 		if(!stunned) 
 		{
@@ -133,7 +157,7 @@ public class PlayerController : MonoBehaviour {
 				}
 			}
 		}
-	}
+	}*/
 
 	public bool IsStunned(){
 		return stunned;
