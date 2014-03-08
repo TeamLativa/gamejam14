@@ -12,9 +12,6 @@ public class PlayerController : MonoBehaviour {
 	private float currentSpeed;
 	private float targetSpeed;
 	private Vector2 amountToMove;
-
-	private bool isOnTotemSpot;
-
 	
 	private bool stunned = false;
 	private float stunnedTimer = 0.0f;
@@ -37,17 +34,6 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		//drop component for totem
-		if(Input.GetButtonDown("Fire1"))
-		{
-			if (isOnTotemSpot)
-			{
-				//add things to totem
-
-
-
-			}
-		}
-
 		if(!stunned){
 			HandleMovement();
 		}
@@ -71,17 +57,23 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-
-
-		if (collision.gameObject.name == "TopColliderTotem") {
-						isOnTotemSpot = true;
-				}
-		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")) 
+		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")
+		    || (collision.gameObject.tag == "PlatformTotem")) 
 		{
 			//
+			if(Input.GetButtonDown("Xbutton_"+PNumber))
+			{
+				if (collision.gameObject.tag == "PlatformTotem")
+				{
+					//add things to totem
+					//if(player got all items to add a part)
+					//instantiate(blueTotem, blueTotem.transform.position, Quaternion.identity);
+					Debug.Log ("IM adding parts to the totem!");
+				}
+			}
+
 			if(Input.GetButtonDown("Abutton_"+PNumber))
 			{
-				
 				rigidbody2D.AddForce(Vector3.up * JumpHeight);
 				
 			}

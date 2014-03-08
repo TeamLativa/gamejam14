@@ -4,7 +4,7 @@ using System.Collections;
 public class GameCamera : MonoBehaviour {
 	private Transform target;
 	private Transform target2;
-	private float trackSpeed = 10f;
+	private float trackSpeed = 2f;
 	private float minSize = 6f;
 	private float minY = 0f;
 	private float maxSize = 12f;
@@ -25,34 +25,27 @@ public class GameCamera : MonoBehaviour {
 			dist.x = Mathf.Abs (dist.x);
 			dist.y = Mathf.Abs (dist.y);
 
-			
-			Debug.Log (camera.orthographicSize);
 			if (dist.magnitude>minSize)
 			{
 				if (dist.magnitude < maxSize)
 				{
-					camera.orthographicSize = dist.magnitude;
+					camera.orthographicSize = IncrementTowards(camera.orthographicSize, dist.magnitude, trackSpeed);
 					y = IncrementTowards(transform.position.y, camera.orthographicSize-maxY, trackSpeed);
 
 				}
 				else
 				{
 					y = IncrementTowards(transform.position.y, maxY, trackSpeed);
-					camera.orthographicSize = maxSize;
+					camera.orthographicSize = IncrementTowards(camera.orthographicSize, maxSize, trackSpeed);
 
 				}
 			}
 			else
 			{
-				camera.orthographicSize = minSize;
+				camera.orthographicSize = IncrementTowards(camera.orthographicSize, minSize, trackSpeed);
 				y = IncrementTowards(transform.position.y, minY, trackSpeed);
-			}/*
-			if ( y > maxY)
-				y = IncrementTowards(transform.position.y, maxY, trackSpeed);
+			} 
 
-			if ( y < minY)
-				y = IncrementTowards(transform.position.y, minY, trackSpeed);
-		*/
 			transform.position = new Vector3(0,y, transform.position.z);
 
 		}
