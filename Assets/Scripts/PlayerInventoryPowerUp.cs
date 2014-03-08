@@ -7,14 +7,23 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	private GameObject powerUp1, powerUp2;
 	private int nbPowerUp;
 
+	private SpriteRenderer rendererPU1;
+	private SpriteRenderer rendererPU2;
+	public GameObject GuiPowerUP1;
+	public GameObject GuiPowerUP2;
+	public Sprite ForceSprite;
+	public Sprite BouclierSprite;
+	public Sprite VitesseSprite;
+
 	// Use this for initialization
 	void Start () {
 		nbPowerUp = 0;
+		rendererPU1 = GuiPowerUP1.GetComponent<SpriteRenderer>();
+		rendererPU2 = GuiPowerUP2.GetComponent<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
 	public void AddPowerUp(GameObject pUp){
