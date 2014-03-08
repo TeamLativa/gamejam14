@@ -153,6 +153,8 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUBouclierVitesse()
 	{
+		gameObject.GetComponent<PlayerController>().ApplyBonusSpeed(1.5f,6.0f);
+		gameObject.GetComponent<PlayerController>().ApplyBonusJump(2.0f,6.0f);
 	}
 	private void PUVitesseVitesse()
 	{

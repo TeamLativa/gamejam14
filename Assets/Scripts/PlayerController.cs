@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	public float Speed = 1f;
-	public int JumpHeight = 100;
+	public float JumpHeight = 100.0f;
 
 	public string PNumber;
 	
@@ -28,11 +28,15 @@ public class PlayerController : MonoBehaviour {
 	private float speedTimer = 0.0f;
 	private float baseSpeed;
 
+	private float jumpTimer = 0.0f;
+	private float baseJumpHeight;
+
 	public int LastLayer;
 
 	// Use this for initialization
 	void Start () {
 		baseSpeed = Speed;
+		baseJumpHeight = JumpHeight;
 	}
 
 	void Update()
@@ -50,6 +54,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		VerifySpeedTimer();
+		VerifyJumpTimer();
 	}
 
 	// Update is called once per frame
@@ -185,5 +190,29 @@ public class PlayerController : MonoBehaviour {
 	void SetSpeedTimer(float time)
 	{
 		speedTimer = time;
+    }
+
+	void VerifyJumpTimer()
+	{
+		if(jumpTimer > 0.0f){
+			jumpTimer -= Time.deltaTime;
+			if(jumpTimer <= 0)
+			{
+				JumpHeight = baseJumpHeight;
+				jumpTimer = 0.0f;
+			}
+			
+		}
+	}
+	
+	public void ApplyBonusJump(float bonus, float time)
+	{
+		JumpHeight *= bonus;
+		SetJumpTimer(time);
+    }
+    
+    void SetJumpTimer(float time)
+    {
+        jumpTimer = time;
     }
 }
