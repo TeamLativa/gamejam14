@@ -52,8 +52,15 @@ public class LandEnemy : MonoBehaviour {
 				lastCollidedWall = coll.gameObject;
 				Debug.Log ("Collided, changing direction");
 				direction = -direction;
+				Flip();
 			}
 		}
+	}
+
+	void Flip(){
+		Vector3 scale = transform.localScale;
+		scale.x *= -1;
+		transform.localScale = scale;
 	}
 	
 	void HandleFire(){
