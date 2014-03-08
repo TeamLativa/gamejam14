@@ -25,11 +25,11 @@ public class GameCamera : MonoBehaviour {
 			dist.x = Mathf.Abs (dist.x);
 			dist.y = Mathf.Abs (dist.y);
 
-			if (dist.magnitude>minSize)
+			if (dist.y>minSize)
 			{
 				if (dist.magnitude < maxSize)
 				{
-					camera.orthographicSize = IncrementTowards(camera.orthographicSize, dist.magnitude, trackSpeed);
+					camera.orthographicSize = IncrementTowards(camera.orthographicSize, dist.y, trackSpeed);
 					y = IncrementTowards(transform.position.y, camera.orthographicSize-maxY, trackSpeed);
 
 				}
