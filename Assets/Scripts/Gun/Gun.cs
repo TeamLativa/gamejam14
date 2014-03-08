@@ -43,7 +43,6 @@ public class Gun : MonoBehaviour {
 
 			if (Mathf.Abs(axisHorizontal) < 0.01 || Mathf.Abs(axisVertical) < 0.01)
 			{
-				Debug.Log("FUCK OFF");
 				rotating = false;
 				return;
 			}
