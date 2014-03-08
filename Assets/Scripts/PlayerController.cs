@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
 	void Update()
 	{
 
-		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0)
+		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
 		{
 			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
 		}
