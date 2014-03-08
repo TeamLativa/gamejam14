@@ -25,11 +25,14 @@ public class PlayerController : MonoBehaviour {
 	private bool stunned = false;
 	private float stunnedTimer = 0.0f;
 
+	private float speedTimer = 0.0f;
+	private float baseSpeed;
+
 	public int LastLayer;
 
 	// Use this for initialization
 	void Start () {
-
+		baseSpeed = Speed;
 	}
 
 	void Update()
@@ -45,6 +48,8 @@ public class PlayerController : MonoBehaviour {
 		if(stunnedTimer <= 0.0f){
 			stunned = false;
 		}
+
+		VerifySpeedTimer();
 	}
 
 	// Update is called once per frame
@@ -143,4 +148,28 @@ public class PlayerController : MonoBehaviour {
 		stunned = true;
 		stunnedTimer = stunTime;
 	}
+
+	void VerifySpeedTimer()
+	{
+		if(speedTimer > 0.0f){
+			speedTimer -= Time.deltaTime;
+			if(speedTimer <= 0)
+			{
+				Speed = baseSpeed;
+                speedTimer = 0.0f;
+            }
+            
+        }
+	}
+
+	public void ApplyBonusSpeed(float bonus, float time)
+	{
+		Speed *= bonus;
+		SetSpeedTimer(time);
+	}
+
+	void SetSpeedTimer(float time)
+	{
+		speedTimer = time;
+    }
 }

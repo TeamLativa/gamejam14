@@ -134,6 +134,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUVitesse()
 	{
+		gameObject.GetComponent<PlayerController>().ApplyBonusSpeed(1.5f,6.0f);
 	}
 	private void PUForceForce()
 	{
@@ -144,6 +145,8 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUForceVitesse()
 	{
+		gameObject.GetComponent<PlayerController>().ApplyBonusSpeed(1.5f,10.0f);
+		gameObject.GetComponentInChildren<Gun>().ApplyBonusFireRate(0.75f,10.0f);
 	}
 	private void PUBouclierBouclier()
 	{
@@ -153,5 +156,6 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUVitesseVitesse()
 	{
+		gameObject.GetComponent<PlayerController>().ApplyBonusSpeed(3.0f,6.0f);
 	}
 }

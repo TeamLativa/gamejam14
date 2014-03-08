@@ -14,6 +14,9 @@ public class Gun : MonoBehaviour {
 
 	private float projectileTimer = 0.0f;
 
+	private float fireRateTimer = 0.0f;
+	private float baseFireRate;
+
 	private string pNumber;
 
 	public PlayerController ParentPlayerController;
@@ -28,6 +31,7 @@ public class Gun : MonoBehaviour {
 		ParentPlayerController = transform.parent.gameObject.GetComponent<PlayerController>();
 		pNumber = transform.parent.GetComponent<PlayerController>().PNumber;
 		Proj = NormalProj;
+		baseFireRate = FireRate;
 	}
 	
 	// Update is called once per frame
@@ -38,6 +42,7 @@ public class Gun : MonoBehaviour {
 			Fire();
 		}
 		VerifyProjectileTimer();
+		VerifyFireRateTimer();
 
 	}
 
@@ -64,6 +69,11 @@ public class Gun : MonoBehaviour {
 		projectileTimer = time;
 	}
 
+	void SetFireRateTimer(float time)
+	{
+		fireRateTimer = time;
+	}
+
 	void VerifyProjectileTimer()
 	{
 		if(projectileTimer > 0.0f){
@@ -76,10 +86,28 @@ public class Gun : MonoBehaviour {
 
 		}
 	}
-
-	void RotateGun()
+	void VerifyFireRateTimer()
 	{
-		float axisHorizontal = Input.GetAxisRaw("RightAnalogX_"+pNumber);
+		if(fireRateTimer > 0.0f){
+			fireRateTimer -= Time.deltaTime;
+			if(fireRateTimer <= 0)
+			{
+				FireRate = baseFireRate;
+				fireRateTimer = 0.0f;
+			}
+			
+		}
+	}
+	
+	public void ApplyBonusFireRate(float bonus, float time)
+    {
+        FireRate *= bonus;
+        SetFireRateTimer(time);
+    }
+    
+    void RotateGun()
+    {
+        float axisHorizontal = Input.GetAxisRaw("RightAnalogX_"+pNumber);
 		//Debug.Log("X: "+axisHorizontal);
 		float axisVertical = Input.GetAxisRaw("RightAnalogY_"+pNumber);
 		//Debug.Log("Y: "+axisVertical);
