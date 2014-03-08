@@ -31,7 +31,7 @@ public class Projectile : MonoBehaviour {
 
 	void OnCollisionEnter2d(Collider2D collider)
 	{
-		if ( collider.gameObject.tag == "Enemy")
+		if (collider.gameObject.tag == "Enemy")
 		{
 			collider.gameObject.SendMessage("TakeDamage", Damage);
 		}

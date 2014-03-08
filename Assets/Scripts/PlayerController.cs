@@ -12,8 +12,7 @@ public class PlayerController : MonoBehaviour {
 	private float currentSpeed;
 	private float targetSpeed;
 	private Vector2 amountToMove;
-
-	public bool Grounded = false;
+	
 	private bool stunned = false;
 	private float stunnedTimer = 0.0f;
 
@@ -37,23 +36,14 @@ public class PlayerController : MonoBehaviour {
 		if(!stunned){
 			HandleMovement();
 		}
+
 	}
 
 	void HandleMovement(){
-		if(Grounded)
-		{
-			//Jump
-			if(Input.GetButtonDown("Abutton_"+PNumber))
-			{
-				Grounded = false;
-				rigidbody2D.AddForce(new Vector3(0, JumpHeight, 0));
-				
-			}
-		}
 		//Input
 
 		float axisH = Input.GetAxisRaw ("LeftAnalogX_"+PNumber);
-		if (Mathf.Abs(axisH)>0.01)
+		if (Mathf.Abs(axisH)>0.05)
 		{
 			targetSpeed = axisH * Speed;
 
@@ -66,11 +56,19 @@ public class PlayerController : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "Platform")) 
+		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")) 
 		{
-			Grounded = true;
+			//
+			if(Input.GetButtonDown("Abutton_"+PNumber))
+			{
+				
+				rigidbody2D.AddForce(Vector3.up * JumpHeight);
+				
+			}
 		}
 	}
+
+
 
 	void Stun(float stunTime){
 		stunned = true;
