@@ -30,8 +30,9 @@ public class PlayerController : MonoBehaviour {
 		{
 			//Jump
 			if(Input.GetButtonDown("Jump"))
-			{
+			{Grounded = false;
 				rigidbody2D.AddForce(new Vector3(0, JumpHeight, 0));
+
 			}
 		}
 		//Input
@@ -48,14 +49,6 @@ public class PlayerController : MonoBehaviour {
 		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "Platform")) 
 		{
 			Grounded = true;
-		}
-	}
-
-	void OnCollisionExit2D(Collision2D collision)
-	{
-		if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "Platform")) 
-		{
-			Grounded = false;
 		}
 	}
 }

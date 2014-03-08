@@ -3,19 +3,58 @@ using System.Collections;
 
 public class GameCamera : MonoBehaviour {
 	private Transform target;
-	private float trackSpeed = 10;
-	
+	private Transform target2;
+	private float trackSpeed = 10f;
+	private float minSize = 6f;
+	private float minY = 0f;
+	private float maxSize = 12f;
+	private float maxY = 6f;
+
 	// Set target
-	public void SetTarget(Transform t) {
+	public void SetTarget(Transform t, Transform t2) {
 		target = t;
+		target2 = t2;
 	}
 	
 	// Track target
 	void LateUpdate() {
-		if (target) {
-			float x = IncrementTowards(transform.position.x, target.position.x, trackSpeed);
+		if ((target)&&(target2)) {
+			float y;
+
+			Vector2 dist = target2.transform.position-target.transform.position;
+			dist.x = Mathf.Abs (dist.x);
+			dist.y = Mathf.Abs (dist.y);
+
 			
-			transform.position = new Vector3(x,0, transform.position.z);
+			Debug.Log (camera.orthographicSize);
+			if (dist.magnitude>minSize)
+			{
+				if (dist.magnitude < maxSize)
+				{
+					camera.orthographicSize = dist.magnitude;
+					y = IncrementTowards(transform.position.y, camera.orthographicSize-maxY, trackSpeed);
+
+				}
+				else
+				{
+					y = IncrementTowards(transform.position.y, maxY, trackSpeed);
+					camera.orthographicSize = maxSize;
+
+				}
+			}
+			else
+			{
+				camera.orthographicSize = minSize;
+				y = IncrementTowards(transform.position.y, minY, trackSpeed);
+			}/*
+			if ( y > maxY)
+				y = IncrementTowards(transform.position.y, maxY, trackSpeed);
+
+			if ( y < minY)
+				y = IncrementTowards(transform.position.y, minY, trackSpeed);
+		*/
+			transform.position = new Vector3(0,y, transform.position.z);
+
 		}
 	}
 	
