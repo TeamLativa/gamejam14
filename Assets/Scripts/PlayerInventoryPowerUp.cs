@@ -7,19 +7,19 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	private string powerUp1, powerUp2;
 	private int nbPowerUp;
 
-	private SpriteRenderer rendererPU1;
-	private SpriteRenderer rendererPU2;
+	private GUITexture rendererPU1;
+	private GUITexture rendererPU2;
 	public GameObject GuiPowerUP1;
 	public GameObject GuiPowerUP2;
-	public Sprite ForceSprite;
-	public Sprite BouclierSprite;
-	public Sprite VitesseSprite;
+	public Texture ForceSprite;
+	public Texture BouclierSprite;
+	public Texture VitesseSprite;
 
 	// Use this for initialization
 	void Start () {
 		nbPowerUp = 0;
-		rendererPU1 = GuiPowerUP1.GetComponent<SpriteRenderer>();
-		rendererPU2 = GuiPowerUP2.GetComponent<SpriteRenderer>();
+		rendererPU1 = GuiPowerUP1.GetComponent<GUITexture>();
+		rendererPU2 = GuiPowerUP2.GetComponent<GUITexture>();
 	}
 	
 	// Update is called once per frame
@@ -33,11 +33,11 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 			nbPowerUp++;
 
 			if(pUp.name == "ForcePowerUp")
-				rendererPU1.sprite = ForceSprite;
+				rendererPU1.texture = ForceSprite;
 			if(pUp.name == "BouclierPowerUp")
-				rendererPU1.sprite = BouclierSprite;
+				rendererPU1.texture = BouclierSprite;
 			if(pUp.name == "VitessePowerUp")
-				rendererPU1.sprite = VitesseSprite;
+				rendererPU1.texture = VitesseSprite;
 
 			return;
 		}
@@ -46,11 +46,11 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 			nbPowerUp++;
 
 			if(pUp.name == "ForcePowerUp")
-				rendererPU2.sprite = ForceSprite;
+				rendererPU2.texture = ForceSprite;
 			if(pUp.name == "BouclierPowerUp")
-				rendererPU2.sprite = BouclierSprite;
+				rendererPU2.texture = BouclierSprite;
 			if(pUp.name == "VitessePowerUp")
-				rendererPU2.sprite = VitesseSprite;
+				rendererPU2.texture = VitesseSprite;
 
 			return;
 		}
@@ -58,13 +58,13 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 			powerUp1 = powerUp2;
 			powerUp2 = pUp.name;
 
-			rendererPU1.sprite = rendererPU2.sprite;
+			rendererPU1.texture = rendererPU2.texture;
 			if(pUp.name == "ForcePowerUp")
-				rendererPU2.sprite = ForceSprite;
+				rendererPU2.texture = ForceSprite;
 			if(pUp.name == "BouclierPowerUp")
-				rendererPU2.sprite = BouclierSprite;
+				rendererPU2.texture = BouclierSprite;
 			if(pUp.name == "VitessePowerUp")
-				rendererPU2.sprite = VitesseSprite;
+				rendererPU2.texture = VitesseSprite;
 
 			return;
 		}
@@ -101,8 +101,8 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 					PUVitesseVitesse();
 			}
 			nbPowerUp = 0;
-			rendererPU1.sprite = null;
-			rendererPU2.sprite = null;
+			rendererPU1.texture = null;
+			rendererPU2.texture = null;
 			return true;
 		}
 		
