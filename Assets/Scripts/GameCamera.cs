@@ -27,7 +27,7 @@ public class GameCamera : MonoBehaviour {
 
 			if (dist.y>minSize)
 			{
-				if (dist.magnitude < maxSize)
+				if (dist.y < maxSize)
 				{
 					camera.orthographicSize = IncrementTowards(camera.orthographicSize, dist.y, trackSpeed);
 					y = IncrementTowards(transform.position.y, camera.orthographicSize-maxY, trackSpeed);
