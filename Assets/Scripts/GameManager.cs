@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject Player2;
 
 	public bool EnemySpawnEnabled = true;
+	private bool gameIsOver = false;
 
 	public GameObject FlyingEnemy;
 	public float FlyingEnemySpawnTimer = 5.0f;
@@ -42,9 +43,18 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update(){
-		if(EnemySpawnEnabled){
-			HandleEnemySpawn();
+		if (!gameIsOver) {
+			if(EnemySpawnEnabled){
+				HandleEnemySpawn();
+			}
 		}
+
+	}
+
+	public void SetGameOver(int winnerPlayer){
+		gameIsOver = true;
+
+		Debug.Log ("Player: " + winnerPlayer + " won!");
 	}
 
 	void HandleEnemySpawn(){
