@@ -50,6 +50,8 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	public float StunRate = 0.5f;
 	private float canStun = -1;
+	private float spriteAlpha = 1.0f;
+	private SpriteRenderer spriteRender;
 
 	private bool onTotem;
 	private GameObject winner;
@@ -73,6 +75,8 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 		baseSpeed = runSpeed;
 		baseJumpHeight = jumpHeight;
+
+		spriteRender = GetComponent<SpriteRenderer>();
 	}
 
 
@@ -87,9 +91,6 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void onTriggerEnterEvent( Collider2D col )
 	{
-
-		//Debug.Log( "onTriggerEnterEvent: " + col.gameObject.name );
-
 		if ( col.gameObject.tag == "ProjectileStunning")
 		{
 			col.gameObject.GetComponent<StunningProjectile>().Collision(gameObject);
@@ -117,7 +118,6 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		{
 			onTotem= false;
 		}
-	//	Debug.Log( "onTriggerExitEvent: " + col.gameObject.name );
 
 	}
 
@@ -127,7 +127,6 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void Update()
 	{
-		Debug.Log (neededRoche);
 		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
 		{
 			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
@@ -164,7 +163,22 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		VerifySpeedTimer();
 		VerifyJumpTimer();
 
+		SetInventory ();
 		checkWinner ();
+	}
+
+	void HandleFlashing(){
+		if(spriteAlpha > 0.5f){
+			spriteAlpha += 0.1f;
+		}
+		else if(spriteAlpha >= 1.0f){
+			spriteAlpha -= 0.1f;
+		}
+		spriteRender.color = new Color(1.0f, 1.0f, 1.0f, spriteAlpha); 
+	}
+
+	void SetFullAlpha(){
+		spriteRender.color = new Color(1.0f, 1.0f, 1.0f, 1.0f); 
 	}
 
 	void VerifyJumpTimer()
@@ -520,6 +534,32 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		else if (totemSideToDestroy=="right")
 		Destroy (GameObject.FindWithTag("PlumeD"));
 	}
+
+	public int GetNeededItems(string type)
+	{
+		switch(type)
+		{
+			case "Roche": return neededRoche;break;
+			case "Bois": return neededBois;break;
+			case "Os": return neededOs;break;
+			case "Metal": return neededMetal;break;
+			case "Plume": return neededPlume;break;
+			case "Liane": return neededLiane;break;
+			default: return 0;
+		}
+	}
+
+	void SetInventory ()
+	{
+		Debug.Log (nbRoche);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbRoche);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbBois);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setOs(nbOs);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setMetal(nbMetal);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbPlume);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbLiane);
+	}
+		
 
 	void loadGameOver(string winner)
 	{
