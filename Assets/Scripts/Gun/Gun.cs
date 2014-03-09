@@ -19,6 +19,9 @@ public class Gun : MonoBehaviour {
 
 	private string pNumber;
 
+	public AudioClip[] popClips;
+	public float popVolume = 0.3f;
+
 	public NonPhysicsPlayerController ParentPlayerController;
 
 	// C'est tellemet hot des variables globales
@@ -147,6 +150,10 @@ public class Gun : MonoBehaviour {
 		fireTimer += Time.deltaTime;
 
 		if (Input.GetAxis("RightTrigger_"+ pNumber) < 0 && fireTimer >= FireRate) {
+
+			int i = Random.Range(0, popClips.Length);
+			AudioSource.PlayClipAtPoint(popClips[i], transform.position, popVolume);
+
 			// Instantiate the projectile at the position and rotation of this transform
 			GameObject proj = (GameObject) Instantiate(Proj, transform.position, Quaternion.identity);
 			

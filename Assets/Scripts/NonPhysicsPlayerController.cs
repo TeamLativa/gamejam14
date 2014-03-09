@@ -131,7 +131,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void Update()
 	{
-		setParameterNeeded (1, 1, 1, 1, 1, 1);
+		Debug.Log (neededRoche);
 		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
 		{
 			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
@@ -311,8 +311,6 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	void checkDroppingItemOnTotem()
 	{
 			gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
-		Debug.Log (nbLiane);
-		Debug.Log (neededLiane);
 			//if(player got all items to add a part)
 			if((nbRoche==0)||(putRoche))
 			{
