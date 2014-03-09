@@ -12,7 +12,7 @@ public class PowerUp : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+		Destroy(gameObject, 15.0f);
 	}
 	
 	// Update is called once per frame
