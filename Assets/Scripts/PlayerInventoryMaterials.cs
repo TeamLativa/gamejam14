@@ -90,6 +90,7 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 			return false;
 		else
 		{
+			Debug.Log (nbRoche);
 			gameObject.GetComponent <PlayerController>().GetItems(nbRoche, nbBois, nbOs, nbMetal, nbPlume, nbLiane);
 			return true;
 		}

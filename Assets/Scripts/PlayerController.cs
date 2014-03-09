@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour {
 
 	private bool jump = false;	
 	private bool grounded = false;			// Whether or not the player is grounded.
+	private bool groundedOnTotemSpot = false;	
+
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
 
 	private float speedTimer = 0.0f;
@@ -72,28 +74,129 @@ public class PlayerController : MonoBehaviour {
 			stunned = false;
 		}
 
-		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) || Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Platforms")); 
+		grounded = Physics2D.Linecast (transform.position, groundCheck.position, 1 << LayerMask.NameToLayer ("Ground")) || Physics2D.Linecast (transform.position, groundCheck.position, 1 << LayerMask.NameToLayer ("Platforms"));
 		if((Input.GetButtonDown("Abutton_"+PNumber) || Input.GetButtonDown("LeftBumper_"+PNumber)) && grounded && !stunned)
 			jump = true;
+		groundedOnTotemSpot = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Totem")); 
+		if((Input.GetButtonDown("Xbutton_"+PNumber)&& groundedOnTotemSpot && !stunned))
+		{
+			gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
 
+			Debug.Log (nbRoche);
 
-		VerifySpeedTimer();
-		VerifyJumpTimer();
-	}
-
-	// Update is called once per frame
-	void FixedUpdate () {
-
-
-		//drop component for totem
-		if(!stunned){
-			HandleMovement();
+			//if(player got all items to add a part)
+			if((nbRoche==0)||(putRoche))
+			{
+				if((nbBois==0)||(putBois))
+				{
+					if((nbOs==0)||(putOs))
+					{
+						if((nbMetal==0)||(putMetal))
+						{
+							if((nbPlume==0)||(putPlume))
+							{
+								if(nbLiane!=0)
+								{	
+									if(!putLiane)
+									{
+										Instantiate(TotemPart1, SetPosition(false), Quaternion.identity);
+										putLiane = true;
+										removeOne("liane");
+										nbParts--;
+									}
+								}
+							}
+							else
+							{	
+								if(!putPlume)
+								{	
+									Instantiate(TotemPart2, SetPosition(true), Quaternion.identity);
+									putPlume = true;
+									removeOne("plume");
+									nbParts--;
+								}
+							}
+						}
+						else
+						{	
+							if(!putMetal)
+							{
+								Instantiate(TotemPart3, SetPosition(false), Quaternion.identity);
+								putMetal = true;
+								removeOne("metal");
+								nbParts--;
+							}
+						}
+					}
+					else
+					{	
+						if(!putOs)
+						{
+							Instantiate(TotemPart4, SetPosition(false), Quaternion.identity);
+							putOs = true;
+							removeOne("os");
+							nbParts--;
+						}
+					}
+				}
+				else
+				{	
+					if(!putBois)
+					{
+						Instantiate(TotemPart5, SetPosition(false), Quaternion.identity);
+						putBois = true;
+						removeOne("bois");
+						nbParts--;
+					}
+				}
+			}
+			else
+			{	
+				if(!putRoche)
+				{
+					Instantiate(TotemPart6, SetPosition(false), Quaternion.identity);
+					putRoche = true;
+					removeOne("roche");
+					nbParts--;
+				}
+			}
+			
+			if((putRoche)&&(putBois)&&(putOs)&&(putMetal)&&(putPlume)&&(putLiane))
+			{
+				
+				GameObject part;
+				part = (GameObject)Instantiate(TotemPart6, GetPosition ("Roche"), Quaternion.identity);
+				Flip ();
+				part = (GameObject)Instantiate(TotemPart5, GetPosition ("Bois"), Quaternion.identity);
+				Flip ();
+				part = (GameObject)Instantiate(TotemPart4, GetPosition ("Os"), Quaternion.identity);
+				Flip ();
+				part = (GameObject)Instantiate(TotemPart3, GetPosition ("Metal"), Quaternion.identity);
+				Flip ();
+				part = (GameObject)Instantiate(TotemPart2, GetPosition ("Plume"), Quaternion.identity);
+				Flip ();
+				part = (GameObject)Instantiate(TotemPart1, GetPosition ("Liane"), Quaternion.identity);
+				Flip ();
+			}
 		}
 
-		// If the player should jump...
-		if(jump)
-		{
-			// Add a vertical force to the player.
+	VerifySpeedTimer();
+	VerifyJumpTimer();
+}
+
+// Update is called once per frame
+void FixedUpdate () {
+	
+	
+	//drop component for totem
+	if(!stunned){
+		HandleMovement();
+	}
+	
+	// If the player should jump...
+	if(jump)
+	{
+		// Add a vertical force to the player.
 			rigidbody2D.AddForce(new Vector2(0f, JumpHeight));
 
 			anim.SetTrigger("Jump");
@@ -128,27 +231,24 @@ public class PlayerController : MonoBehaviour {
 			Flip();
 		}
 	}
-
+		/*
 	void OnCollisionEnter2D(Collision2D collision)
 	{
 		if(!stunned) 
 		{
-			//removethat
 			if(Input.GetButtonDown("Xbutton_"+PNumber))
 			{
 				gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
+
 			}
-
-
-
-			if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")
+				if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")
 			    || (collision.gameObject.tag == "PlatformTotem")) 
 			{
 				if(collision.gameObject.tag == "PlatformTotem")
 				{
 					if(Input.GetButtonDown("Xbutton_"+PNumber))
 					{
-						//gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
+						gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
 
 						//if(player got all items to add a part)
 						if((nbRoche==0)||(putRoche))
@@ -255,7 +355,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 	}
-
+*/
 	void Flip(){
 		facingRight = !facingRight;
 		Vector3 scale = transform.localScale;
