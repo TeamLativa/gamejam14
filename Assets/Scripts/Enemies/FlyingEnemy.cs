@@ -26,6 +26,9 @@ public class FlyingEnemy : MonoBehaviour {
 	public float ItemDropRate = 10.0f;
 	public float PowerUpDropRate = 80.0f;
 
+	public AudioClip DeathSound;
+	public float DeathVolume = 0.5f;
+
 	// Use this for initialization
 	void Start () {
 		WaypointSets = GameObject.FindGameObjectsWithTag("WaypointsSet");
@@ -84,6 +87,9 @@ public class FlyingEnemy : MonoBehaviour {
 
 	void HandleDeath(){
 		if(HealthPoints <= 0){
+
+			AudioSource.PlayClipAtPoint(DeathSound, transform.position, DeathVolume);
+
 			// Maybe notify someone
 			DropItem();
 			Instantiate(DeathParticule, transform.position, Quaternion.identity);

@@ -156,18 +156,14 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 		if( Input.GetButtonDown ("Xbutton_"+PNumber)&& onTotem)
 		{
-			checkDroppingItemOnTotem();
-		}
-
-		if( Input.GetButtonDown ("Xbutton_"+PNumber)&& onTotem)
-		{
+			Debug.Log (nbRoche);
 			checkDroppingItemOnTotem();
 		}
 
 		VerifySpeedTimer();
 		VerifyJumpTimer();
 
-		SetInventory ();
+		checkItemCompleted ();
 		checkWinner ();
 	}
 
@@ -310,119 +306,118 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void checkDroppingItemOnTotem()
 	{
-			gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
-			//if(player got all items to add a part)
-			if((nbRoche==0)||(putRoche))
+		//if(player got all items to add a part)
+		if((nbRoche==0)||(putRoche))
+		{
+			if((nbBois==0)||(putBois))
 			{
-				if((nbBois==0)||(putBois))
+				if((nbOs==0)||(putOs))
 				{
-					if((nbOs==0)||(putOs))
+					if((nbMetal==0)||(putMetal))
 					{
-						if((nbMetal==0)||(putMetal))
+						if((nbPlume==0)||(putPlume))
 						{
-							if((nbPlume==0)||(putPlume))
-							{
-								if(nbLiane==neededLiane)
-								{	
-									if(!putLiane)
-									{
-										Instantiate(TotemPart1, SetPosition(false), Quaternion.identity);
-										putLiane = true;
-										removeOne("liane");
-										nbParts--;
-									}
-								}
-							}
-							else
+							if(nbLiane>=neededLiane)
 							{	
-								if((!putPlume) && (nbPlume==neededPlume))
-								{	
-									Instantiate(TotemPart2, SetPosition(true), Quaternion.identity);
-									putPlume = true;
-									removeOne("plume");
+								if(!putLiane)
+								{
+									Instantiate(TotemPart1, SetPosition(false), Quaternion.identity);
+									putLiane = true;
+									removeOne("liane");
 									nbParts--;
 								}
 							}
 						}
 						else
 						{	
-							if((!putMetal) && (nbMetal==neededMetal))
-							{
-								Instantiate(TotemPart3, SetPosition(false), Quaternion.identity);
-								putMetal = true;
-								removeOne("metal");
+							if((!putPlume) && (nbPlume>=neededPlume))
+							{	
+								Instantiate(TotemPart2, SetPosition(true), Quaternion.identity);
+								putPlume = true;
+								removeOne("plume");
 								nbParts--;
 							}
 						}
 					}
 					else
 					{	
-						if((!putOs) && (nbOs==neededOs))
+						if((!putMetal) && (nbMetal>=neededMetal))
 						{
-							Instantiate(TotemPart4, SetPosition(false), Quaternion.identity);
-							putOs = true;
-							removeOne("os");
+							Instantiate(TotemPart3, SetPosition(false), Quaternion.identity);
+							putMetal = true;
+							removeOne("metal");
 							nbParts--;
 						}
 					}
 				}
 				else
 				{	
-					if((!putBois) && (nbBois==neededBois))
+					if((!putOs) && (nbOs>=neededOs))
 					{
-						Instantiate(TotemPart5, SetPosition(false), Quaternion.identity);
-						putBois = true;
-						removeOne("bois");
+						Instantiate(TotemPart4, SetPosition(false), Quaternion.identity);
+						putOs = true;
+						removeOne("os");
 						nbParts--;
 					}
 				}
 			}
 			else
 			{	
-				if((!putRoche) && (nbRoche==neededRoche))
+				if((!putBois) && (nbBois>=neededBois))
 				{
-					Instantiate(TotemPart6, SetPosition(false), Quaternion.identity);
-					putRoche = true;
-					removeOne("roche");
+					Instantiate(TotemPart5, SetPosition(false), Quaternion.identity);
+					putBois = true;
+					removeOne("bois");
 					nbParts--;
 				}
 			}
-			
-			if((putRoche)&&(putBois)&&(putOs)&&(putMetal)&&(putPlume)&&(putLiane))
+		}
+		else
+		{	
+
+			if((!putRoche) && (nbRoche>=neededRoche))
 			{
-
-				winner = this.gameObject;
-				
-				GameObject part;
-				part = (GameObject)Instantiate(TotemPart6, GetPosition ("Roche"), Quaternion.identity);
-				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-				part = (GameObject)Instantiate(TotemPart5, GetPosition ("Bois"), Quaternion.identity);
-				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-				part = (GameObject)Instantiate(TotemPart4, GetPosition ("Os"), Quaternion.identity);
-				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-				part = (GameObject)Instantiate(TotemPart3, GetPosition ("Metal"), Quaternion.identity);
-				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-				part = (GameObject)Instantiate(TotemPart1, GetPosition ("Liane"), Quaternion.identity);
-				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-
-				if(winner.name == "Player 1")
-				{
-					part = (GameObject)Instantiate(TotemPart2, GetPosition ("PlumeG"), Quaternion.identity);
-					part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-				}
-				else if (winner.name=="Player 2")
-				{
-					part = (GameObject)Instantiate(TotemPart2, GetPosition ("PlumeD"), Quaternion.identity);
-					part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-				}
-
-				loadGameOver(winner.name);
-				
+				Instantiate(TotemPart6, SetPosition(false), Quaternion.identity);
+				putRoche = true;
+				removeOne("roche");
+				nbParts--;
 			}
+		}
+		
+		if((putRoche)&&(putBois)&&(putOs)&&(putMetal)&&(putPlume)&&(putLiane))
+		{
+
+			winner = this.gameObject;
+			
+			GameObject part;
+			part = (GameObject)Instantiate(TotemPart6, GetPosition ("Roche"), Quaternion.identity);
+			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
+			part = (GameObject)Instantiate(TotemPart5, GetPosition ("Bois"), Quaternion.identity);
+			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
+			part = (GameObject)Instantiate(TotemPart4, GetPosition ("Os"), Quaternion.identity);
+			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
+			part = (GameObject)Instantiate(TotemPart3, GetPosition ("Metal"), Quaternion.identity);
+			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
+			part = (GameObject)Instantiate(TotemPart1, GetPosition ("Liane"), Quaternion.identity);
+			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
+
+			if(winner.name == "Player 1")
+			{
+				part = (GameObject)Instantiate(TotemPart2, GetPosition ("PlumeG"), Quaternion.identity);
+				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
+			}
+			else if (winner.name=="Player 2")
+			{
+				part = (GameObject)Instantiate(TotemPart2, GetPosition ("PlumeD"), Quaternion.identity);
+				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
+			}
+
+			loadGameOver(winner.name);
+			
+		}
 
 	}
 
-	
 	Vector3 FlipTotem(Vector3 currentScale){
 		
 		Vector3 scale = currentScale;
@@ -430,28 +425,46 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		return scale;
 	}
 
-
-	public void GetItems(int roche, int bois, int os, int metal, int plume, int liane)
+	public int GetItems(string type)
 	{
-		nbRoche = roche;
-		nbBois = bois;
-		nbOs = os;
-		nbMetal = metal;
-		nbPlume = plume;
-		nbLiane = liane;
+		switch(type)
+		{
+			case "roche": return nbRoche;
+			case "bois": return nbBois;
+			case "os": return nbOs;
+			case "metal": return nbMetal;
+			case "plume":return nbPlume;
+			case "liane": return nbLiane;
+			default: return 0;
+		}
 	}
+
 	void removeOne(string objet)
 	{
 		switch(objet)
 		{
-		case "roche": nbRoche--; gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbRoche);break;
-		case "bois":nbBois--; gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbBois);break;
-		case "os":nbMetal--; gameObject.GetComponent<PlayerInventoryMaterials>().setOs(nbOs);break;
-		case "metal":nbMetal--; gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbMetal);break;
-		case "plume":nbPlume--; gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbPlume);break;
-		case "liane":nbLiane--; gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbLiane);break;
+			case "roche": nbRoche-=neededRoche; gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbRoche);break;
+			case "bois":nbBois-=neededBois; gameObject.GetComponent<PlayerInventoryMaterials>().setBois(nbBois);break;
+			case "os":nbOs-=nbOs; gameObject.GetComponent<PlayerInventoryMaterials>().setOs(nbOs);break;
+			case "metal":nbMetal-=neededMetal; gameObject.GetComponent<PlayerInventoryMaterials>().setMetal(nbMetal);break;
+			case "plume":nbPlume-=neededPlume; gameObject.GetComponent<PlayerInventoryMaterials>().setPlume(nbPlume);break;
+			case "liane":nbLiane-=neededLiane; gameObject.GetComponent<PlayerInventoryMaterials>().setLiane(nbLiane);break;
 		}
 	}
+
+	public void setItems(string item, int quantity)
+	{	
+		switch(item)
+		{
+		case "Roche": nbRoche=quantity;break;
+		case "Bois":nbBois=quantity;break;
+		case "Os":nbOs=quantity; break;
+		case "Metal":nbMetal=quantity; break;
+		case "Plume":nbPlume=quantity; break;
+		case "Liane":nbLiane=quantity;break;
+		}		
+	}
+
 
 	public void setParameterNeeded(int roche, int bois, int os, int metal, int plume ,int liane)
 	{
@@ -556,13 +569,28 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	void SetInventory ()
 	{
 		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbRoche);
-		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbBois);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setBois(nbBois);
 		gameObject.GetComponent<PlayerInventoryMaterials>().setOs(nbOs);
 		gameObject.GetComponent<PlayerInventoryMaterials>().setMetal(nbMetal);
-		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbPlume);
-		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbLiane);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setPlume(nbPlume);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setLiane(nbLiane);
 	}
 		
+	void checkItemCompleted()
+	{
+		if (putRoche)
+			gameObject.GetComponent<PlayerInventoryMaterials> ().TexteRoche.color = Color.green;
+		if (putBois)
+			gameObject.GetComponent<PlayerInventoryMaterials> ().TexteBois.color = Color.green;
+		if (putOs)
+			gameObject.GetComponent<PlayerInventoryMaterials> ().TexteOs.color = Color.green;
+		if (putMetal)
+			gameObject.GetComponent<PlayerInventoryMaterials> ().TexteMetal.color = Color.green;
+		if (putPlume)
+			gameObject.GetComponent<PlayerInventoryMaterials> ().TextePlume.color = Color.green;
+		if (putLiane)
+			gameObject.GetComponent<PlayerInventoryMaterials> ().TexteLiane.color = Color.green;
+	}
 
 	void loadGameOver(string winner)
 	{

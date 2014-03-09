@@ -24,6 +24,9 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	public GameObject PowerSpeedEffect;
 	public GameObject SpeedShieldEffect;
 
+	public AudioClip PowerUpSound;
+	public float PowerUpVolume = 0.5f;
+
 	// Use this for initialization
 	void Start () {
 		nbPowerUp = 0;
@@ -80,11 +83,13 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 
 	public bool ConsumePowerUps(){
-		Debug.Log (nbPowerUp);
+
 		if(nbPowerUp == 0)
 			return false;
 		else
 		{
+
+			AudioSource.PlayClipAtPoint(PowerUpSound, transform.position, PowerUpVolume);
 			if(nbPowerUp == 1)
 			{
 				if(powerUp1 == "ForcePowerUp")
