@@ -133,9 +133,8 @@ void FixedUpdate () {
 	void checkDroppingItemOnTotem()
 	{
 		if(Input.GetButtonDown("Xbutton_"+PNumber))
-		{
-			gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
-			
+		{			
+			Debug.Log ("HLKHJL");
 			//if(player got all items to add a part)
 			if((nbRoche==0)||(putRoche))
 			{

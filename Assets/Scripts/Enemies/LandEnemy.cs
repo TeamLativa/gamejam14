@@ -29,6 +29,9 @@ public class LandEnemy : MonoBehaviour {
 	public GameObject[] PowerUps = new GameObject[3];
 	public float ItemDropRate = 10.0f;
 	public float PowerUpDropRate = 80.0f;
+
+	public AudioClip DeathSound;
+	public float DeathVolume = 0.5f;
 	
 	// Use this for initialization
 	void Start () {
@@ -119,9 +122,12 @@ public class LandEnemy : MonoBehaviour {
 	void TakeDamage(int amount){
 		HealthPoints -= amount;
 	}
-	
+
 	void HandleDeath(){
 		if(HealthPoints <= 0){
+
+			AudioSource.PlayClipAtPoint(DeathSound, transform.position, DeathVolume);
+
 			// Maybe notify someone
 			DropItem();
 			Explode();
