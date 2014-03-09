@@ -47,6 +47,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	private float jumpTimer = 0.0f;
 	private float baseJumpHeight;
 
+<<<<<<< HEAD
 	public float StunRate = 0.5f;
 	private float canStun = -1;
 
@@ -54,6 +55,11 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	private GameObject winner;
 
 
+=======
+	private bool onTotem;
+	private GameObject winner;
+
+>>>>>>> ce64548b3547636ac7b5a5198aef1feca9e03e1b
 	public bool IsStunned(){
 		return stunned;
 	}
@@ -85,7 +91,11 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void onTriggerEnterEvent( Collider2D col )
 	{
+<<<<<<< HEAD
 
+=======
+		//Debug.Log( "onTriggerEnterEvent: " + col.gameObject.name );
+>>>>>>> ce64548b3547636ac7b5a5198aef1feca9e03e1b
 		if ( col.gameObject.tag == "ProjectileStunning")
 		{
 			col.gameObject.GetComponent<StunningProjectile>().Collision(gameObject);
@@ -95,6 +105,15 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		{
 			col.gameObject.GetComponent<FlyingEnemyProj>().Collision(gameObject);
 		}
+<<<<<<< HEAD
+=======
+
+		if (col.gameObject.tag == "Totem") 
+		{
+			onTotem= true;
+		}
+	}
+>>>>>>> ce64548b3547636ac7b5a5198aef1feca9e03e1b
 
 		if (col.gameObject.tag == "Totem") 
 		{
@@ -104,13 +123,20 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void onTriggerExitEvent( Collider2D col )
 	{
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> ce64548b3547636ac7b5a5198aef1feca9e03e1b
 		if (col.gameObject.tag == "Totem") 
 		{
 			onTotem= false;
 		}
 	//	Debug.Log( "onTriggerExitEvent: " + col.gameObject.name );
+<<<<<<< HEAD
 
+=======
+>>>>>>> ce64548b3547636ac7b5a5198aef1feca9e03e1b
 	}
 
 	#endregion
@@ -141,6 +167,11 @@ public class NonPhysicsPlayerController : MonoBehaviour
 				canStun -= Time.deltaTime;
 			}
 			HandleMovement();
+		}
+
+		if( Input.GetButtonDown ("Xbutton_"+PNumber)&& onTotem)
+		{
+			checkDroppingItemOnTotem();
 		}
 
 		if( Input.GetButtonDown ("Xbutton_"+PNumber)&& onTotem)
