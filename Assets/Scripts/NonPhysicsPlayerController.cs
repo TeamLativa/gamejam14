@@ -139,7 +139,10 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		}
 
 		if(stunned)
+		{
 			stunnedTimer -= Time.deltaTime;
+			_animator.SetFloat("StunTimer", stunnedTimer);
+		}
 		
 		if(stunnedTimer <= 0.0f){
 			_animator.SetTrigger("NotStunned");
@@ -265,8 +268,10 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	void Stun(float stunTime){
 		if(!stunned && canStun <= 0) {
 			_animator.SetTrigger("Stun");
+
 			stunned = true;
 			stunnedTimer = stunTime;
+			_animator.SetFloat("StunTimer", stunnedTimer);
 			canStun = StunRate;
 		}
 	}
