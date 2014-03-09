@@ -19,7 +19,7 @@ public class Gun : MonoBehaviour {
 
 	private string pNumber;
 
-	public PlayerController ParentPlayerController;
+	public NonPhysicsPlayerController ParentPlayerController;
 
 	// C'est tellemet hot des variables globales
 	private float prevAngle = 0;
@@ -28,8 +28,8 @@ public class Gun : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		ParentPlayerController = transform.parent.gameObject.GetComponent<PlayerController>();
-		pNumber = transform.parent.GetComponent<PlayerController>().PNumber;
+		ParentPlayerController = transform.parent.gameObject.GetComponent<NonPhysicsPlayerController>();
+		pNumber = transform.parent.GetComponent<NonPhysicsPlayerController>().PNumber;
 		Proj = NormalProj;
 		baseFireRate = FireRate;
 	}
