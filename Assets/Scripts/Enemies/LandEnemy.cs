@@ -14,11 +14,15 @@ public class LandEnemy : MonoBehaviour {
 	private Vector2 direction;
 	private GameObject lastCollidedWall;
 	public float PlayerStunTime = 1.0f;
+	public float ReverseTimerMin = 3.0f;
+	public float ReverseTimerMax = 8.0f;
+	private float reverseTimer = 5.0f;
 	
 	// Firing
 	public float FireRate = 3.0f;
 	private float fireTimer = 0.0f;
 	public GameObject Projectile;
+	public float FireDistance = 7.0f;
 	
 	// Item Drop
 	public GameObject[] Items = new GameObject[2];
@@ -30,6 +34,11 @@ public class LandEnemy : MonoBehaviour {
 	void Start () {
 		direction = transform.forward + new Vector3(1.0f, 0.0f);
 		transform.position = SpawnPoints.GetChild(Random.Range(0, SpawnPoints.childCount)).position;
+		SetRandomTimer();
+	}
+
+	void SetRandomTimer(){
+		reverseTimer = Random.Range(ReverseTimerMin, ReverseTimerMax);
 	}
 	
 	// Update is called once per frame
@@ -40,10 +49,20 @@ public class LandEnemy : MonoBehaviour {
 
 	void FixedUpdate(){
 		HandleMovement();
+		HandleReverseTimer();
 	}
 	
 	void HandleMovement(){
 		rigidbody2D.velocity = new Vector2(MovementSpeed * direction.x, rigidbody2D.velocity.y);
+	}
+
+	void HandleReverseTimer(){
+		reverseTimer -= Time.deltaTime;
+		if(reverseTimer <= 0.0f){
+			direction = -direction;
+			Flip();
+			SetRandomTimer();
+		}
 	}
 
 	void OnCollisionEnter2D(Collision2D coll){
@@ -82,8 +101,23 @@ public class LandEnemy : MonoBehaviour {
 		fireTimer += Time.deltaTime;
 		
 		if(fireTimer >= FireRate){
-			// Fire towards player
-			fireTimer = 0.0f;
+
+			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+			float distanceToP1 = (players[0].gameObject.transform.position - transform.position).magnitude;
+			float distanceToP2 = (players[1].gameObject.transform.position - transform.position).magnitude;
+
+			Transform target = (distanceToP1 <= distanceToP2) ? players[0].gameObject.transform : players[1].gameObject.transform;
+
+			if((target.position - transform.position).magnitude <= FireDistance){
+
+				GameObject proj = (GameObject) Instantiate(Projectile, transform.position, Quaternion.identity);
+				Vector3 relative = target.localPosition - transform.localPosition;
+				float targetAngle = Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg - 90;
+				proj.transform.rotation = Quaternion.Euler(0, 0, targetAngle);
+
+				fireTimer = 0.0f;
+			}
 		}
 	}
 	
@@ -95,9 +129,14 @@ public class LandEnemy : MonoBehaviour {
 		if(HealthPoints <= 0){
 			// Maybe notify someone
 			DropItem();
+			Explode();
 			Instantiate(DeathParticule, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}
+	}
+
+	void Explode(){
+
 	}
 	
 	void DropItem(){
