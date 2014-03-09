@@ -262,6 +262,13 @@ public class PlayerController : MonoBehaviour {
 		scale.x *= -1;
 		transform.localScale = scale;
 	}
+
+	public int facingSideInt(){
+		if(facingRight)
+			return 1;
+		else
+			return -1;
+	}
 	
 	public bool IsStunned(){
 		return stunned;
