@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
 	public float Speed = 1f;
-	public int JumpHeight = 100;
+	public float JumpHeight = 100.0f;
 
 	public string PNumber;
 	
@@ -31,18 +31,34 @@ public class PlayerController : MonoBehaviour {
 	private bool stunned = false;
 	private float stunnedTimer = 0.0f;
 
+	private bool jump = false;	
+	private bool grounded = false;			// Whether or not the player is grounded.
+	private Transform groundCheck;			// A position marking where to check if the player is grounded.
+
 	private float speedTimer = 0.0f;
 	private float baseSpeed;
 
+	private float jumpTimer = 0.0f;
+	private float baseJumpHeight;
+
 	public int LastLayer;
+
+	private Animator anim;
+	private bool facingRight = true;
 
 	// Use this for initialization
 	void Start () {
+
+		groundCheck = transform.Find("GroundCheck");
 		baseSpeed = Speed;
+		baseJumpHeight = JumpHeight;
+
+		anim = gameObject.GetComponent<Animator>();
 	}
 
 	void Update()
 	{
+		Physics2D.IgnoreLayerCollision(gameObject.layer, 9, rigidbody2D.velocity.y > 0);
 
 		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
 		{
@@ -52,17 +68,38 @@ public class PlayerController : MonoBehaviour {
 			stunnedTimer -= Time.deltaTime;
 
 		if(stunnedTimer <= 0.0f){
+			anim.SetTrigger("NotStunned");
 			stunned = false;
 		}
 
+		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) || Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Platforms")); 
+		if((Input.GetButtonDown("Abutton_"+PNumber) || Input.GetButtonDown("LeftBumper_"+PNumber)) && grounded && !stunned)
+			jump = true;
+
+
 		VerifySpeedTimer();
+		VerifyJumpTimer();
 	}
 
 	// Update is called once per frame
 	void FixedUpdate () {
+
+
 		//drop component for totem
 		if(!stunned){
 			HandleMovement();
+		}
+
+		// If the player should jump...
+		if(jump)
+		{
+			// Add a vertical force to the player.
+			rigidbody2D.AddForce(new Vector2(0f, JumpHeight));
+
+			anim.SetTrigger("Jump");
+			
+			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
+			jump = false;
 		}
 
 	}
@@ -71,6 +108,9 @@ public class PlayerController : MonoBehaviour {
 		//Input
 
 		float axisH = Input.GetAxisRaw ("LeftAnalogX_"+PNumber);
+
+		anim.SetFloat("Speed", Mathf.Abs(axisH));
+
 		if (Mathf.Abs(axisH)>0.05)
 		{
 			targetSpeed = axisH * Speed;
@@ -79,6 +119,13 @@ public class PlayerController : MonoBehaviour {
 			amountToMove.x = targetSpeed; 
 			//rigidbody2D.AddForce(amountToMove);
 			transform.position += new Vector3(targetSpeed, 0, 0) * Time.deltaTime;
+		}
+
+		if(axisH > 0 && !facingRight){
+			Flip();
+		}
+		else if(axisH < 0 && facingRight){
+			Flip();
 		}
 	}
 
@@ -185,17 +232,17 @@ public class PlayerController : MonoBehaviour {
 
 							GameObject part;
 							part = (GameObject)Instantiate(TotemPart6, GetPosition ("Roche"), Quaternion.identity);
-							part.transform.localScale = Flip (part.transform.localScale);
+							Flip ();
 							part = (GameObject)Instantiate(TotemPart5, GetPosition ("Bois"), Quaternion.identity);
-							part.transform.localScale = Flip (part.transform.localScale);					
+							Flip ();
 							part = (GameObject)Instantiate(TotemPart4, GetPosition ("Os"), Quaternion.identity);
-							part.transform.localScale = Flip (part.transform.localScale);
+							Flip ();
 							part = (GameObject)Instantiate(TotemPart3, GetPosition ("Metal"), Quaternion.identity);
-							part.transform.localScale = Flip (part.transform.localScale);
+							Flip ();
 							part = (GameObject)Instantiate(TotemPart2, GetPosition ("Plume"), Quaternion.identity);
-							part.transform.localScale = Flip (part.transform.localScale);
+							Flip ();
 							part = (GameObject)Instantiate(TotemPart1, GetPosition ("Liane"), Quaternion.identity);
-							part.transform.localScale = Flip (part.transform.localScale);
+							Flip ();
 						}
 					}
 				}
@@ -209,10 +256,11 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	Vector3 Flip(Vector3 currentScale){
-		Vector3 scale = currentScale;
+	void Flip(){
+		facingRight = !facingRight;
+		Vector3 scale = transform.localScale;
 		scale.x *= -1;
-		return scale;
+		transform.localScale = scale;
 	}
 	
 	public bool IsStunned(){
@@ -220,8 +268,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Stun(float stunTime){
-		stunned = true;
-		stunnedTimer = stunTime;
+		if(!stunned) {
+			anim.SetTrigger("Stun");
+			stunned = true;
+			stunnedTimer = stunTime;
+		}
 	}
 
 	void VerifySpeedTimer()
@@ -321,4 +372,27 @@ public class PlayerController : MonoBehaviour {
 		default : return new Vector2(5,5);break;
 		}
 	}
+	void VerifyJumpTimer()
+	{
+		if(jumpTimer > 0.0f){
+			jumpTimer -= Time.deltaTime;
+			if(jumpTimer <= 0)
+			{
+				JumpHeight = baseJumpHeight;
+				jumpTimer = 0.0f;
+			}
+			
+		}
+	}
+	
+	public void ApplyBonusJump(float bonus, float time)
+	{
+		JumpHeight *= bonus;
+		SetJumpTimer(time);
+    }
+    
+    void SetJumpTimer(float time)
+    {
+        jumpTimer = time;
+    }
 }

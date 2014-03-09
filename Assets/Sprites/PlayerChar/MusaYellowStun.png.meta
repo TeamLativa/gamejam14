@@ -1,0 +1,112 @@
+fileFormatVersion: 2
+guid: f2be7b0cd94646545aad86d7da6341ba
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: MusaYellowStun_0
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 37
+        width: 113
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaYellowStun_1
+      rect:
+        serializedVersion: 2
+        x: 225
+        y: 47
+        width: 97
+        height: 261
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaYellowStun_2
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 56
+        width: 115
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaYellowStun_3
+      rect:
+        serializedVersion: 2
+        x: 629
+        y: 52
+        width: 169
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaYellowStun_4
+      rect:
+        serializedVersion: 2
+        x: 865
+        y: 35
+        width: 181
+        height: 157
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaYellowStun_5
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 33
+        width: 210
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaYellowStun_6
+      rect:
+        serializedVersion: 2
+        x: 1495
+        y: 35
+        width: 210
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+  spritePackingTag: 
+  userData: 

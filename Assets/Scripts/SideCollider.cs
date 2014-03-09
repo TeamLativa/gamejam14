@@ -19,13 +19,7 @@ public class SideCollider : MonoBehaviour {
 	{
 		if (coll.gameObject.tag == "Player")
 		{
-			//Debug.Log (Time.time + " >> SIDE IN: " + coll.gameObject.layer);
-			if (coll.gameObject.layer == 21)
-			{
-				return;
-			}
-			coll.gameObject.GetComponent<PlayerController>().LastLayer = coll.gameObject.layer;
-			coll.gameObject.layer =  21;
+			transform.parent.collider2D.isTrigger = true;
 		}
 	}
 	
@@ -33,8 +27,7 @@ public class SideCollider : MonoBehaviour {
 	{
 		if (coll.gameObject.tag == "Player")
 		{
-			//Debug.Log(Time.time + " >> SIDE OUT :" + coll.gameObject.GetComponent<PlayerController>().LastLayer);
-			coll.gameObject.layer = coll.gameObject.GetComponent<PlayerController>().LastLayer;
+			transform.parent.collider2D.isTrigger = false;
 		}
 	}
 }

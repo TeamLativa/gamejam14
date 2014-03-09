@@ -15,6 +15,8 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	public Texture BouclierSprite;
 	public Texture VitesseSprite;
 
+	public GameObject BouclierDevantSimple;
+
 	// Use this for initialization
 	void Start () {
 		nbPowerUp = 0;
@@ -131,6 +133,9 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUBouclier()
 	{
+		GameObject bouclier = (GameObject)Instantiate(BouclierDevantSimple);
+		bouclier.transform.parent = gameObject.transform;
+		bouclier.transform.position = gameObject.transform.position + new Vector3(0.95f,0,0);
 	}
 	private void PUVitesse()
 	{
@@ -153,6 +158,8 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUBouclierVitesse()
 	{
+		gameObject.GetComponent<PlayerController>().ApplyBonusSpeed(1.5f,6.0f);
+		gameObject.GetComponent<PlayerController>().ApplyBonusJump(2.0f,6.0f);
 	}
 	private void PUVitesseVitesse()
 	{
