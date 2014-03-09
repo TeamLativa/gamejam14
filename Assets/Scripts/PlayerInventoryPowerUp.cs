@@ -21,6 +21,8 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 
 	public GameObject FireEffect;
 	public GameObject SpeedEffect;
+	public GameObject PowerSpeedEffect;
+	public GameObject SpeedShieldEffect;
 
 	// Use this for initialization
 	void Start () {
@@ -164,6 +166,10 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	private void PUForceForce()
 	{
 		gameObject.GetComponentInChildren<Gun>().ChangeProjectile(2);
+		GameObject effect = (GameObject)Instantiate(FireEffect);
+		effect.transform.parent = gameObject.transform;
+		effect.transform.position = gameObject.transform.position + new Vector3(0,-1.5f,0);
+		effect.SendMessage("destroyEffect",6.0f);
 	}
 	private void PUForceBouclier()
 	{
@@ -181,6 +187,11 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	{
 		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusSpeed(1.5f,10.0f);
 		gameObject.GetComponentInChildren<Gun>().ApplyBonusFireRate(0.75f,10.0f);
+
+		GameObject effect = (GameObject)Instantiate(PowerSpeedEffect);
+		effect.transform.parent = gameObject.transform;
+		effect.transform.position = gameObject.transform.position + new Vector3(0,-1.5f,0);
+		effect.SendMessage("destroyEffect",10.0f);
 	}
 	private void PUBouclierBouclier()
 	{
@@ -198,9 +209,19 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	{
 		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusSpeed(1.5f,6.0f);
 		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusJump(2.0f,6.0f);
+
+		GameObject effect = (GameObject)Instantiate(SpeedShieldEffect);
+		effect.transform.parent = gameObject.transform;
+		effect.transform.position = gameObject.transform.position + new Vector3(0,-1.5f,0);
+		effect.SendMessage("destroyEffect",6.0f);
 	}
 	private void PUVitesseVitesse()
 	{
 		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusSpeed(3.0f,6.0f);
+
+		GameObject effect = (GameObject)Instantiate(SpeedEffect);
+		effect.transform.parent = gameObject.transform;
+		effect.transform.position = gameObject.transform.position + new Vector3(0,-1.5f,0);
+		effect.SendMessage("destroyEffect",6.0f);
 	}
 }
