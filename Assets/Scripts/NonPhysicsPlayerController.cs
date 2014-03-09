@@ -411,7 +411,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		}
 	}
 
-	void setParameterNeeded(int roche, int bois, int os, int metal, int plume ,int liane)
+	public void setParameterNeeded(int roche, int bois, int os, int metal, int plume ,int liane)
 	{
 
 		neededRoche = roche;
