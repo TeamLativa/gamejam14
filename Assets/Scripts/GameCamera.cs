@@ -7,8 +7,8 @@ public class GameCamera : MonoBehaviour {
 	private float trackSpeed = 2f;
 	private float minSize = 6f;
 	private float minY = 0f;
-	private float maxSize = 12f;
-	private float maxY = 6f;
+	private float maxSize = 10.70f;
+	private float maxY = 4.70f;
 
 	public GameObject Player1;
 	public GameObject Player2;
