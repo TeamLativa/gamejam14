@@ -19,6 +19,9 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	public GameObject BouclierFire;
 	public GameObject BouclierComplet;
 
+	public GameObject FireEffect;
+	public GameObject SpeedEffect;
+
 	// Use this for initialization
 	void Start () {
 		nbPowerUp = 0;
@@ -133,6 +136,10 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	private void PUForce()
 	{
 		gameObject.GetComponentInChildren<Gun>().ChangeProjectile(1);
+		GameObject effect = (GameObject)Instantiate(FireEffect);
+		effect.transform.parent = gameObject.transform;
+		effect.transform.position = gameObject.transform.position + new Vector3(0,-1.5f,0);
+		effect.SendMessage("destroyEffect",4.0f);
 	}
 	private void PUBouclier()
 	{
@@ -149,6 +156,10 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	private void PUVitesse()
 	{
 		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusSpeed(1.5f,6.0f);
+		GameObject effect = (GameObject)Instantiate(SpeedEffect);
+		effect.transform.parent = gameObject.transform;
+		effect.transform.position = gameObject.transform.position + new Vector3(0,-1.5f,0);
+		effect.SendMessage("destroyEffect",6.0f);
 	}
 	private void PUForceForce()
 	{
