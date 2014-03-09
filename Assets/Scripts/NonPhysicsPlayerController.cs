@@ -50,6 +50,8 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	public float StunRate = 0.5f;
 	private float canStun = -1;
+	private float spriteAlpha = 1.0f;
+	private SpriteRenderer spriteRender;
 
 	private bool onTotem;
 	private GameObject winner;
@@ -73,6 +75,8 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 		baseSpeed = runSpeed;
 		baseJumpHeight = jumpHeight;
+
+		spriteRender = GetComponent<SpriteRenderer>();
 	}
 
 
@@ -161,6 +165,20 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 		SetInventory ();
 		checkWinner ();
+	}
+
+	void HandleFlashing(){
+		if(spriteAlpha > 0.5f){
+			spriteAlpha += 0.1f;
+		}
+		else if(spriteAlpha >= 1.0f){
+			spriteAlpha -= 0.1f;
+		}
+		spriteRender.color = new Color(1.0f, 1.0f, 1.0f, spriteAlpha); 
+	}
+
+	void SetFullAlpha(){
+		spriteRender.color = new Color(1.0f, 1.0f, 1.0f, 1.0f); 
 	}
 
 	void VerifyJumpTimer()
