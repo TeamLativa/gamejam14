@@ -46,13 +46,10 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	private float jumpTimer = 0.0f;
 	private float baseJumpHeight;
 
-<<<<<<< HEAD
 	public bool IsStunned(){
 		return stunned;
 	}
-=======
 	private bool facingRight = true;
->>>>>>> fa1bbdbac9270bd1214e7762ad39d9cd65cbdedd
 
 	void Awake()
 	{
@@ -427,5 +424,4 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		default : return new Vector2(5,5);break;
 		}
 	}
-	
 }
