@@ -192,10 +192,6 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	public int facingSideInt(){
 		return (facingRight) ? 1 : -1;
 	}
-
-	public bool IsStunned(){
-		return stunned;
-	}
 	
 	void Stun(float stunTime){
 		if(!stunned) {
