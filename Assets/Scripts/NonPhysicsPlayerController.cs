@@ -91,7 +91,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void onTriggerEnterEvent( Collider2D col )
 	{
-		if ( col.gameObject.tag == "ProjectileStunning")
+		/*if ( col.gameObject.tag == "ProjectileStunning")
 		{
 			col.gameObject.GetComponent<StunningProjectile>().Collision(gameObject);
 		}
@@ -99,7 +99,11 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		if ( col.gameObject.tag == "EnemyProjectile")
 		{
 			col.gameObject.GetComponent<FlyingEnemyProj>().Collision(gameObject);
-		}
+		}*/
+
+
+		// Trigger the collision function in the Colliding GameObject
+		col.gameObject.SendMessage("Collision", gameObject, SendMessageOptions.DontRequireReceiver);
 
 
 		if (col.gameObject.tag == "Totem") 
