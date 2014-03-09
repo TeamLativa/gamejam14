@@ -582,7 +582,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void loadGameOver(string winner)
 	{
-		int winnerId = (winner == "Player1") ? 1 : 2;
+		int winnerId = (winner == "Player 1") ? 1 : 2;
 		GameObject.FindGameObjectWithTag ("MainCamera").gameObject.GetComponent<GameManager> ().SetGameOver(winnerId);
 	}
 }

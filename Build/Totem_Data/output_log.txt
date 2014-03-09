@@ -11,7 +11,7 @@ Platform assembly: C:\Users\Jerome\Documents\Game\gamejam14\Build\Totem_Data\Man
 Loading C:\Users\Jerome\Documents\Game\gamejam14\Build\Totem_Data\Managed\UnityEngine.dll into Unity Child Domain
 Platform assembly: C:\Users\Jerome\Documents\Game\gamejam14\Build\Totem_Data\Managed\Assembly-CSharp.dll (this message is harmless)
 Loading C:\Users\Jerome\Documents\Game\gamejam14\Build\Totem_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-- Completed reload, in  0.135 seconds
+- Completed reload, in  0.147 seconds
 desktop: 1600x900 59Hz; virtual: 1600x900 at 0,0
 <RI> Initializing input.
 XInput1_3.dll not found.
