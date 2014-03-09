@@ -16,11 +16,12 @@ public class FlyingEnemyProj : MonoBehaviour {
 			Destroy(gameObject);
 	}
 
-	void OnTriggerEnter2D(Collider2D coll){
-		if(coll.gameObject.tag == "Player"){
-			coll.gameObject.SendMessage("Stun", StunTime);
-			Instantiate(CollisionParticule, coll.gameObject.transform.position, Quaternion.identity);
-			Destroy(gameObject);
-		}
+	// OH WOW WHAT IS THIS I WONDER
+
+	public void Collision(GameObject coll){
+		coll.gameObject.SendMessage("Stun", StunTime);
+		Instantiate(CollisionParticule, coll.gameObject.transform.position, Quaternion.identity);
+		Destroy(gameObject);
 	}
+
 }

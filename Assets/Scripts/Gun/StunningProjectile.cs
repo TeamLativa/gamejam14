@@ -31,18 +31,23 @@ public class StunningProjectile : MonoBehaviour {
 		}
 	}
 	
-	void OnTriggerEnter2D(Collider2D coll) // DEUX L
+	void OnTriggerEnter2D(Collider2D col) // DEUX L
 	{
-		if (coll.gameObject.tag == "Enemy")
+		if (col.gameObject.tag == "Enemy")
 		{
 			Debug.Log("Do Ouch");
-			coll.gameObject.SendMessage("TakeDamage", Damage);
-		}
-
-		if(coll.gameObject.tag == "Player")
-		{
-			coll.gameObject.SendMessage("Stun", StunningTime);
+			col.gameObject.SendMessage("TakeDamage", Damage);
+			Destroy(gameObject);
 		}
 	}
-	
+
+
+	// OH WOW WHAT IS THIS I WONDER
+	public void Collision(GameObject col)
+	{
+		col.SendMessage("Stun", StunningTime);
+		Destroy(gameObject);
+	}
+
+
 }
