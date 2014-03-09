@@ -263,12 +263,12 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	}
 	
 	void Stun(float stunTime){
-		/*if(!stunned && canStun <= 0) {
+		if(!stunned && canStun <= 0) {
 			_animator.SetTrigger("Stun");
 			stunned = true;
 			stunnedTimer = stunTime;
 			canStun = StunRate;
-		}*/
+		}
 	}
 	
 	public void ApplyBonusJump(float bonus, float time)
