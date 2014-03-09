@@ -133,9 +133,17 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUBouclier()
 	{
+		int side = gameObject.GetComponent<PlayerController>().facingSideInt();
+
 		GameObject bouclier = (GameObject)Instantiate(BouclierDevantSimple);
 		bouclier.transform.parent = gameObject.transform;
-		bouclier.transform.position = gameObject.transform.position + new Vector3(0.95f,0,0);
+		bouclier.transform.position = gameObject.transform.position + new Vector3(side * 0.75f,0,0);
+
+
+		//Debug.Log(side);
+		Vector3 scale = bouclier.transform.localScale;
+		scale.x *= side;
+		bouclier.transform.localScale = scale;
 	}
 	private void PUVitesse()
 	{
