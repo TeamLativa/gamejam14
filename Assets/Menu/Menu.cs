@@ -10,7 +10,6 @@ public class Menu : MonoBehaviour {
 	public Sprite CreditsMenuSprite;
 
 	public GameObject PressStart;
-	public GameObject Controls;
 
 	private string shownScreen;
 	
@@ -48,8 +47,8 @@ public class Menu : MonoBehaviour {
 		}
 
 		if(shownScreen == "Start")
-			PressStart.renderer.enabled = Controls.renderer.enabled = true;
+			PressStart.renderer.enabled = true;
 		else
-			PressStart.renderer.enabled = Controls.renderer.enabled = false;
+			PressStart.renderer.enabled = false;
 	}
 }
