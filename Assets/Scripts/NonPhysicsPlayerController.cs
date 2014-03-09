@@ -46,10 +46,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	private float jumpTimer = 0.0f;
 	private float baseJumpHeight;
 
-
-	public bool IsStunned(){
-		return stunned;
-	}
+	private bool facingRight = true;
 
 	void Awake()
 	{
@@ -93,6 +90,10 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	// the Update loop contains a very simple example of moving the character around and controlling the animation
 	void Update()
 	{
+		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
+		{
+			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
+		}
 
 		if(stunned)
 			stunnedTimer -= Time.deltaTime;
@@ -124,10 +125,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void HandleMovement()
 	{
-		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
-		{
-			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
-		}
+	
 		if(stunned)
 			stunnedTimer -= Time.deltaTime;
 		
@@ -148,13 +146,15 @@ public class NonPhysicsPlayerController : MonoBehaviour
 			if( transform.localScale.x < 0f )
 				transform.localScale = new Vector3( -transform.localScale.x, transform.localScale.y, transform.localScale.z );
 
-
+			facingRight = true;
 		}
 		else if( Input.GetAxisRaw ("LeftAnalogX_"+PNumber) < -0.05 )
 		{
 			normalizedHorizontalSpeed = -1;
 			if( transform.localScale.x > 0f )
 				transform.localScale = new Vector3( -transform.localScale.x, transform.localScale.y, transform.localScale.z );
+
+			facingRight = false;
 		}
 		else
 		{
@@ -182,6 +182,22 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 		_controller.move( _velocity * Time.deltaTime );
 
+	}
+
+	public int facingSideInt(){
+		return (facingRight) ? 1 : -1;
+	}
+
+	public bool IsStunned(){
+		return stunned;
+	}
+	
+	void Stun(float stunTime){
+		if(!stunned) {
+			_animator.SetTrigger("Stun");
+			stunned = true;
+			stunnedTimer = stunTime;
+		}
 	}
 	
 	public void ApplyBonusJump(float bonus, float time)
