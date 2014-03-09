@@ -10,7 +10,7 @@ public class LandEnemy : MonoBehaviour {
 	// Movement
 	public float MovementSpeed = 3.0f;
 	public float Force = 15.0f;
-	public Transform SpawnPoints;
+	private Transform SpawnPoints;
 	private Vector2 direction;
 	private GameObject lastCollidedWall;
 	public float PlayerStunTime = 1.0f;
@@ -32,6 +32,7 @@ public class LandEnemy : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
+		SpawnPoints = GameObject.FindGameObjectWithTag("SpawnPoints").transform;
 		direction = transform.forward + new Vector3(1.0f, 0.0f);
 		transform.position = SpawnPoints.GetChild(Random.Range(0, SpawnPoints.childCount)).position;
 		SetRandomTimer();
