@@ -50,6 +50,6 @@ public class Menu : MonoBehaviour {
 		if(shownScreen == "Start")
 			PressStart.renderer.enabled = Controls.renderer.enabled = true;
 		else
-			PressStart.renderer.enabled = Controls.renderer.enabled = true;
+			PressStart.renderer.enabled = Controls.renderer.enabled = false;
 	}
 }
