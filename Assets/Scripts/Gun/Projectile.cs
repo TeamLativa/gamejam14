@@ -35,6 +35,7 @@ public class Projectile : MonoBehaviour {
 		{
 			Debug.Log("Do Ouch");
 			coll.gameObject.SendMessage("TakeDamage", Damage);
+			Destroy(gameObject);
 		}
 	}
 

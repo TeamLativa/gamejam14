@@ -78,6 +78,15 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	void onTriggerEnterEvent( Collider2D col )
 	{
 		Debug.Log( "onTriggerEnterEvent: " + col.gameObject.name );
+		if ( col.gameObject.tag == "ProjectileStunning")
+		{
+			col.gameObject.GetComponent<StunningProjectile>().Collision(gameObject);
+		}
+
+		if ( col.gameObject.tag == "EnemyProjectile")
+		{
+			col.gameObject.GetComponent<FlyingEnemyProj>().Collision(gameObject);
+		}
 	}
 
 
