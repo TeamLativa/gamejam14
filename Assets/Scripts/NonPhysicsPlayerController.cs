@@ -555,7 +555,6 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void SetInventory ()
 	{
-		Debug.Log (nbRoche);
 		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbRoche);
 		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbBois);
 		gameObject.GetComponent<PlayerInventoryMaterials>().setOs(nbOs);
