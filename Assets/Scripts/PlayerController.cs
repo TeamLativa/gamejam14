@@ -37,12 +37,17 @@ public class PlayerController : MonoBehaviour {
 
 	public int LastLayer;
 
+	private Animator anim;
+	private bool facingRight = true;
+
 	// Use this for initialization
 	void Start () {
 
 		groundCheck = transform.Find("GroundCheck");
 		baseSpeed = Speed;
 		baseJumpHeight = JumpHeight;
+
+		anim = gameObject.GetComponent<Animator>();
 	}
 
 	void Update()
@@ -57,11 +62,9 @@ public class PlayerController : MonoBehaviour {
 			stunnedTimer -= Time.deltaTime;
 
 		if(stunnedTimer <= 0.0f){
+			anim.SetTrigger("NotStunned");
 			stunned = false;
 		}
-
-
-
 
 		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground")) || Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Platforms")); 
 		if((Input.GetButtonDown("Abutton_"+PNumber) || Input.GetButtonDown("LeftBumper_"+PNumber)) && grounded && !stunned)
@@ -86,6 +89,8 @@ public class PlayerController : MonoBehaviour {
 		{
 			// Add a vertical force to the player.
 			rigidbody2D.AddForce(new Vector2(0f, JumpHeight));
+
+			anim.SetTrigger("Jump");
 			
 			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
 			jump = false;
@@ -97,6 +102,9 @@ public class PlayerController : MonoBehaviour {
 		//Input
 
 		float axisH = Input.GetAxisRaw ("LeftAnalogX_"+PNumber);
+
+		anim.SetFloat("Speed", Mathf.Abs(axisH));
+
 		if (Mathf.Abs(axisH)>0.05)
 		{
 			targetSpeed = axisH * Speed;
@@ -105,6 +113,13 @@ public class PlayerController : MonoBehaviour {
 			amountToMove.x = targetSpeed; 
 			//rigidbody2D.AddForce(amountToMove);
 			transform.position += new Vector3(targetSpeed, 0, 0) * Time.deltaTime;
+		}
+
+		if(axisH > 0 && !facingRight){
+			Flip();
+		}
+		else if(axisH < 0 && facingRight){
+			Flip();
 		}
 	}
 
@@ -180,10 +195,11 @@ public class PlayerController : MonoBehaviour {
 		}
 	}*/
 
-	Vector3 Flip(Vector3 currentScale){
-		Vector3 scale = currentScale;
+	void Flip(){
+		facingRight = !facingRight;
+		Vector3 scale = transform.localScale;
 		scale.x *= -1;
-		return scale;
+		transform.localScale = scale;
 	}
 	
 	public bool IsStunned(){
@@ -191,8 +207,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Stun(float stunTime){
-		stunned = true;
-		stunnedTimer = stunTime;
+		if(!stunned) {
+			anim.SetTrigger("Stun");
+			stunned = true;
+			stunnedTimer = stunTime;
+		}
 	}
 
 	void VerifySpeedTimer()

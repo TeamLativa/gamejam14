@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9d82000e93738794f8458f9b1852bde2
+guid: 839f8f0a73f3a6949a00e4bd30c26106
 TextureImporter:
   serializedVersion: 2
   mipmaps:
@@ -21,7 +21,7 @@ TextureImporter:
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 1024
+  maxTextureSize: 2048
   textureSettings:
     filterMode: -1
     aniso: 1
@@ -45,130 +45,130 @@ TextureImporter:
     compressionQuality: 50
   spriteSheet:
     sprites:
-    - name: TestMusa_0
+    - name: MusaBlueRun_0
       rect:
         serializedVersion: 2
-        x: 10
-        y: 230
-        width: 67
-        height: 72
+        x: 32
+        y: 764
+        width: 222
+        height: 238
       alignment: 0
       pivot: {x: 0, y: 0}
-    - name: TestMusa_1
+    - name: MusaBlueRun_1
       rect:
         serializedVersion: 2
-        x: 89
-        y: 229
-        width: 66
-        height: 73
+        x: 336
+        y: 760
+        width: 218
+        height: 242
       alignment: 0
       pivot: {x: 0, y: 0}
-    - name: TestMusa_2
+    - name: MusaBlueRun_2
       rect:
         serializedVersion: 2
-        x: 175
-        y: 226
-        width: 61
-        height: 81
+        x: 623
+        y: 748
+        width: 201
+        height: 269
       alignment: 0
       pivot: {x: 0, y: 0}
-    - name: TestMusa_3
+    - name: MusaBlueRun_3
       rect:
         serializedVersion: 2
-        x: 245
-        y: 225
-        width: 52
-        height: 82
+        x: 924
+        y: 747
+        width: 176
+        height: 272
       alignment: 0
       pivot: {x: 0, y: 0}
-    - name: TestMusa_4
+    - name: MusaBlueRun_4
       rect:
         serializedVersion: 2
-        x: 300
-        y: 225
-        width: 46
-        height: 81
+        x: 1196
+        y: 747
+        width: 152
+        height: 268
       alignment: 0
       pivot: {x: 0, y: 0}
-    - name: TestMusa_5
+    - name: MusaBlueRun_5
       rect:
         serializedVersion: 2
-        x: 354
+        x: 1468
+        y: 744
+        width: 137
+        height: 277
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaBlueRun_6
+      rect:
+        serializedVersion: 2
+        x: 1696
+        y: 747
+        width: 180
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaBlueRun_7
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 239
+        width: 214
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaBlueRun_8
+      rect:
+        serializedVersion: 2
+        x: 348
+        y: 237
+        width: 221
+        height: 235
+      alignment: 0
+      pivot: {x: 0, y: 0}
+    - name: MusaBlueRun_9
+      rect:
+        serializedVersion: 2
+        x: 656
         y: 224
-        width: 41
-        height: 84
+        width: 204
+        height: 262
       alignment: 0
       pivot: {x: 0, y: 0}
-    - name: TestMusa_6
+    - name: MusaBlueRun_10
       rect:
         serializedVersion: 2
-        x: 404
-        y: 225
-        width: 55
-        height: 82
+        x: 947
+        y: 224
+        width: 177
+        height: 262
       alignment: 0
       pivot: {x: 0, y: 0}
-    - name: TestMusa_7
+    - name: MusaBlueRun_11
       rect:
         serializedVersion: 2
-        x: 467
-        y: 228
-        width: 64
-        height: 76
+        x: 1220
+        y: 220
+        width: 156
+        height: 270
       alignment: 0
       pivot: {x: 0, y: 0}
-    - name: TestMusa_8
+    - name: MusaBlueRun_12
       rect:
         serializedVersion: 2
-        x: 11
-        y: 134
-        width: 66
-        height: 71
+        x: 1483
+        y: 216
+        width: 146
+        height: 323
       alignment: 0
       pivot: {x: 0, y: 0}
-    - name: TestMusa_9
+    - name: MusaBlueRun_13
       rect:
         serializedVersion: 2
-        x: 99
-        y: 131
-        width: 60
-        height: 79
-      alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: TestMusa_10
-      rect:
-        serializedVersion: 2
-        x: 178
-        y: 130
-        width: 54
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: TestMusa_11
-      rect:
-        serializedVersion: 2
-        x: 235
-        y: 129
-        width: 47
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: TestMusa_12
-      rect:
-        serializedVersion: 2
-        x: 287
-        y: 128
-        width: 44
-        height: 82
-      alignment: 0
-      pivot: {x: 0, y: 0}
-    - name: TestMusa_13
-      rect:
-        serializedVersion: 2
-        x: 344
-        y: 130
-        width: 53
-        height: 80
+        x: 1711
+        y: 223
+        width: 177
+        height: 265
       alignment: 0
       pivot: {x: 0, y: 0}
   spritePackingTag: 

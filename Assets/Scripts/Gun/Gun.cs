@@ -125,7 +125,8 @@ public class Gun : MonoBehaviour {
 			float angle = Mathf.Atan2(axisVertical, axisHorizontal) * Mathf.Rad2Deg;
 			//Debug.Log("Angle: " + angle);
 
-			transform.RotateAround(transform.parent.position, Vector3.up, -(angle - prevAngle));
+			transform.RotateAround(transform.parent.position, Vector3.up , -(angle - prevAngle));
+			//transform.RotateAround (Vector3.up, -(angle - prevAngle));
 
 			transform.localRotation = Quaternion.Euler(0.0f,0, -angle);
 			prevAngle = angle;
