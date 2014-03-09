@@ -115,6 +115,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void Update()
 	{
+		setParameterNeeded (1, 1, 1, 1, 1, 1);
 		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
 		{
 			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
@@ -266,7 +267,8 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	void checkDroppingItemOnTotem()
 	{
 			gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
-			
+		Debug.Log (nbLiane);
+		Debug.Log (neededLiane);
 			//if(player got all items to add a part)
 			if((nbRoche==0)||(putRoche))
 			{
@@ -278,9 +280,9 @@ public class NonPhysicsPlayerController : MonoBehaviour
 						{
 							if((nbPlume==0)||(putPlume))
 							{
-								if(nbLiane!=0)
+								if(nbLiane==neededLiane)
 								{	
-									if((!putLiane) && (nbLiane==neededLiane))
+									if(!putLiane)
 									{
 										Instantiate(TotemPart1, SetPosition(false), Quaternion.identity);
 										putLiane = true;
@@ -302,7 +304,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 						}
 						else
 						{	
-							if(((!putMetal) && (nbMetal==neededMetal))
+							if((!putMetal) && (nbMetal==neededMetal))
 							{
 								Instantiate(TotemPart3, SetPosition(false), Quaternion.identity);
 								putMetal = true;
@@ -411,12 +413,14 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void setParameterNeeded(int roche, int bois, int os, int metal, int plume ,int liane)
 	{
+
 		neededRoche = roche;
 		neededBois = bois;
 		neededOs = os;
 		neededMetal = metal;
 		neededPlume = plume;
 		neededLiane = liane;
+
 	}
 
 	Vector2 SetPosition(bool isItTheBird)
