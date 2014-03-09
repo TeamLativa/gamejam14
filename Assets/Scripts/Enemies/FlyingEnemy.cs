@@ -9,7 +9,7 @@ public class FlyingEnemy : MonoBehaviour {
 
 	// Movement
 	public float MovementSpeed = 3.0f;
-	public Transform[] WaypointSets = new Transform[3];
+	private GameObject[] WaypointSets = new GameObject[3];
 	private Transform waypoints;
 	private int nextWaypoint = 0;
 	private int currentWaypoint = 0;
@@ -28,7 +28,8 @@ public class FlyingEnemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		waypoints = (Transform) WaypointSets[Random.Range(0, WaypointSets.GetLength(0))];
+		WaypointSets = GameObject.FindGameObjectsWithTag("WaypointsSet");
+		waypoints = WaypointSets[Random.Range(0, WaypointSets.GetLength(0))].transform;
 		nextWaypoint = Random.Range(0,waypoints.childCount);
 		transform.position = waypoints.GetChild(nextWaypoint).transform.position;
 	}
