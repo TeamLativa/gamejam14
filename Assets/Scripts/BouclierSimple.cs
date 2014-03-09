@@ -3,6 +3,8 @@ using System.Collections;
 
 public class BouclierSimple : MonoBehaviour {
 
+	public GameObject CollisionParticule;
+
 	// Use this for initialization
 	void Start () {
 		Destroy(gameObject, 10.0f);
@@ -17,6 +19,7 @@ public class BouclierSimple : MonoBehaviour {
 	{
 		if (coll.gameObject.tag == "Projectile" || coll.gameObject.tag == "EnemyProjectile")
 		{
+			Instantiate(CollisionParticule, coll.gameObject.transform.position, Quaternion.identity);
 			Destroy(coll.gameObject);
 		}
 	}
