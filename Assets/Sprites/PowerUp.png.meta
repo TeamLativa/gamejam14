@@ -1,0 +1,130 @@
+fileFormatVersion: 2
+guid: 7a3cf0b0b974a364bbcc2ff746c672b0
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: PowerUp_0
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 286
+        width: 57
+        height: 94
+      alignment: 9
+      pivot: {x: .540876687, y: .425449789}
+    - name: PowerUp_1
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 286
+        width: 57
+        height: 90
+      alignment: 9
+      pivot: {x: .523514032, y: .446387738}
+    - name: PowerUp_2
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 286
+        width: 57
+        height: 94
+      alignment: 9
+      pivot: {x: .542325497, y: .425855279}
+    - name: PowerUp_3
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 161
+        width: 58
+        height: 95
+      alignment: 9
+      pivot: {x: .550839305, y: .422403127}
+    - name: PowerUp_4
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 161
+        width: 58
+        height: 87
+      alignment: 9
+      pivot: {x: .532352328, y: .458404183}
+    - name: PowerUp_5
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 161
+        width: 58
+        height: 93
+      alignment: 9
+      pivot: {x: .532352328, y: .429381669}
+    - name: PowerUp_6
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 33
+        width: 59
+        height: 96
+      alignment: 9
+      pivot: {x: .540890753, y: .416230768}
+    - name: PowerUp_7
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 33
+        width: 58
+        height: 90
+      alignment: 9
+      pivot: {x: .532352328, y: .444898486}
+    - name: PowerUp_8
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 33
+        width: 59
+        height: 96
+      alignment: 9
+      pivot: {x: .543162465, y: .417626947}
+  spritePackingTag: 
+  userData: 
