@@ -4,29 +4,24 @@ using System.Collections.Generic;
 
 public class PlayerInventoryMaterials : MonoBehaviour {
 
-	public GameObject GuiRoche,GuiBois,GuiOs,GuiMetal,GuiPlume,GuiLiane;
+	public GUIText TexteRoche,TexteBois, TexteOs, TexteMetal, TextePlume, TexteLiane;
 
 	private int nbItem,nbRoche, nbBois,nbOs,nbMetal,nbPlume,nbLiane;
 
-	private GUITexture rendererRoche,rendererBois, rendererOs, rendererMetal, rendererPlume, rendererLiane;
-
-	private GUIText texteRoche,texteBois, texteOs, texteMetal, textePlume, texteLiane;
-
-	private int materialRoche,materialBois,materialOs,materialMetal,materialPlume,materialLiane;
-
 	// Use this for initialization
-	void Start () {/*
-		rendererRoche = GuiRoche.GetComponent<GUITexture> ();
-		rendererBois = GuiBois.GetComponent<GUITexture> ();
-		rendererOs = GuiOs.GetComponent<GUITexture> ();
-		rendererMetal = GuiMetal.GetComponent<GUITexture> ();
-		rendererPlume = GuiPlume.GetComponent<GUITexture> ();
-		rendererLiane = GuiLiane.GetComponent<GUITexture> ();*/
+	void Start () {
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		//Debug.Log (nbRoche);
+		TexteRoche.text = nbRoche+"/"+gameObject.GetComponent <NonPhysicsPlayerController>().GetNeededItems("Roche");
+		TexteBois.text = nbBois+"/"+gameObject.GetComponent <NonPhysicsPlayerController>().GetNeededItems("Bois");
+		TexteOs.text = nbOs+"/"+gameObject.GetComponent <NonPhysicsPlayerController>().GetNeededItems("Os");
+		TexteMetal.text = nbMetal+"/"+gameObject.GetComponent <NonPhysicsPlayerController>().GetNeededItems("Metal");
+		TextePlume.text = nbPlume+"/"+gameObject.GetComponent <NonPhysicsPlayerController>().GetNeededItems("Plume");
+		TexteLiane.text = nbLiane+"/"+gameObject.GetComponent <NonPhysicsPlayerController>().GetNeededItems("Liane");
 	}
 
 	public void AddItem(GameObject item)
@@ -38,7 +33,6 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbRoche++;
 					nbItem++;
-					//texteRoche.text = nbRoche.ToString ();
 				}
 			break;
 			case "Bois" :
@@ -46,7 +40,6 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbBois++;
 					nbItem++;
-					//texteBois.text = nbBois.ToString ();
 				}
 				break;
 			case "Os" :
@@ -54,7 +47,6 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbOs++;
 					nbItem++;
-					//texteOs.text = nbOs.ToString ();
 				}
 				break;
 			case "Metal" : 
@@ -62,7 +54,6 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbMetal++;
 					nbItem++;
-					//texteMetal.text = nbMetal.ToString ();
 				}
 				break;
 			case "Plume" : 
@@ -70,7 +61,6 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbPlume++;
 					nbItem++;
-					//textePlume.text = nbPlume.ToString ();
 				}
 				break;
 			case "Liane" : 
@@ -78,7 +68,6 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbLiane++;
 					nbItem++;
-					//texteLiane.text = nbLiane.ToString ();
 				}
 				break;
 		}

@@ -91,10 +91,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void onTriggerEnterEvent( Collider2D col )
 	{
-
-		//Debug.Log( "onTriggerEnterEvent: " + col.gameObject.name );
-
-		if ( col.gameObject.tag == "ProjectileStunning")
+		/*if ( col.gameObject.tag == "ProjectileStunning")
 		{
 			col.gameObject.GetComponent<StunningProjectile>().Collision(gameObject);
 		}
@@ -102,7 +99,11 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		if ( col.gameObject.tag == "EnemyProjectile")
 		{
 			col.gameObject.GetComponent<FlyingEnemyProj>().Collision(gameObject);
-		}
+		}*/
+
+
+		// Trigger the collision function in the Colliding GameObject
+		col.gameObject.SendMessage("Collision", gameObject, SendMessageOptions.DontRequireReceiver);
 
 
 		if (col.gameObject.tag == "Totem") 
@@ -121,7 +122,6 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		{
 			onTotem= false;
 		}
-	//	Debug.Log( "onTriggerExitEvent: " + col.gameObject.name );
 
 	}
 
@@ -131,7 +131,6 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void Update()
 	{
-		Debug.Log (neededRoche);
 		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
 		{
 			gameObject.GetComponent<PlayerInventoryPowerUp>().ConsumePowerUps();
@@ -168,6 +167,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		VerifySpeedTimer();
 		VerifyJumpTimer();
 
+		SetInventory ();
 		checkWinner ();
 	}
 
@@ -538,6 +538,32 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		else if (totemSideToDestroy=="right")
 		Destroy (GameObject.FindWithTag("PlumeD"));
 	}
+
+	public int GetNeededItems(string type)
+	{
+		switch(type)
+		{
+			case "Roche": return neededRoche;break;
+			case "Bois": return neededBois;break;
+			case "Os": return neededOs;break;
+			case "Metal": return neededMetal;break;
+			case "Plume": return neededPlume;break;
+			case "Liane": return neededLiane;break;
+			default: return 0;
+		}
+	}
+
+	void SetInventory ()
+	{
+		Debug.Log (nbRoche);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbRoche);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbBois);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setOs(nbOs);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setMetal(nbMetal);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbPlume);
+		gameObject.GetComponent<PlayerInventoryMaterials>().setRoche(nbLiane);
+	}
+		
 
 	void loadGameOver(string winner)
 	{
