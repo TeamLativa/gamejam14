@@ -6,7 +6,11 @@ public class GameManager : MonoBehaviour {
 	public GameObject Player1;
 	public GameObject Player2;
 
+	public GameObject OrangePlayerWon;
+	public GameObject BluePlayerWon;
+
 	public bool EnemySpawnEnabled = true;
+	private bool gameIsOver = false;
 
 	public GameObject FlyingEnemy;
 	public float FlyingEnemySpawnTimer = 5.0f;
@@ -42,9 +46,27 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update(){
-		if(EnemySpawnEnabled){
-			HandleEnemySpawn();
+		if (!gameIsOver) {
+			if(EnemySpawnEnabled){
+				HandleEnemySpawn();
+			}
 		}
+		else{
+			if(Input.GetButtonDown("Startbutton"))
+				Application.LoadLevel("Menu");
+		}
+
+	}
+
+	public void SetGameOver(int winnerPlayer){
+		gameIsOver = true;
+
+		if(winnerPlayer == 1)
+			Instantiate(OrangePlayerWon, new Vector3(0,0,0), Quaternion.identity);
+		else
+			Instantiate(BluePlayerWon, new Vector3(0,0,0), Quaternion.identity);
+
+		Debug.Log ("Player: " + winnerPlayer + " won!");
 	}
 
 	void HandleEnemySpawn(){

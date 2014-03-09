@@ -18,7 +18,7 @@ public class LandEnemyProjectile : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		transform.position += Vector3.right * Time.deltaTime * MoveSpeed;
+		transform.position += transform.right * Time.deltaTime * MoveSpeed;
 	}
 	
 	void Collision(GameObject coll){
