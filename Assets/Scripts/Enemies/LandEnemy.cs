@@ -23,6 +23,7 @@ public class LandEnemy : MonoBehaviour {
 	private float fireTimer = 0.0f;
 	public GameObject Projectile;
 	public float FireDistance = 7.0f;
+	public int ProjectileUponDeath = 5;
 	
 	// Item Drop
 	public GameObject[] Items = new GameObject[2];
@@ -58,11 +59,6 @@ public class LandEnemy : MonoBehaviour {
 	
 	void HandleMovement(){
 		rigidbody2D.velocity = new Vector2(MovementSpeed * direction.x, rigidbody2D.velocity.y);
-		ClampAngle();
-	}
-
-	void ClampAngle(){
-
 	}
 
 	void HandleReverseTimer(){
@@ -108,12 +104,10 @@ public class LandEnemy : MonoBehaviour {
 			Transform target = (distanceToP1 <= distanceToP2) ? players[0].gameObject.transform : players[1].gameObject.transform;
 
 			if((target.position - transform.position).magnitude <= FireDistance){
-
-				GameObject proj = (GameObject) Instantiate(Projectile, transform.position, Quaternion.identity);
-				Vector3 relative = target.localPosition - transform.localPosition;
-				float targetAngle = Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg - 90;
-				proj.transform.rotation = Quaternion.Euler(0, 0, targetAngle);
-
+				Vector3 relative = target.position - transform.position;
+				float targetAngle = Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg;
+				Debug.Log(targetAngle);
+				GameObject proj = (GameObject) Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, targetAngle));
 				fireTimer = 0.0f;
 			}
 		}
@@ -137,7 +131,11 @@ public class LandEnemy : MonoBehaviour {
 	}
 
 	void Explode(){
-
+		int increment = 180 / ProjectileUponDeath;
+		for(int i = 0; i <= ProjectileUponDeath; i++){
+			float targetAngle = 0 + (increment * i);
+			Instantiate(Projectile, transform.position, Quaternion.Euler(0,0,targetAngle));
+		}
 	}
 	
 	void DropItem(){
