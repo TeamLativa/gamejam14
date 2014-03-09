@@ -5,6 +5,11 @@ public class GameManager : MonoBehaviour {
 	
 	public GameObject Player;
 	public GameObject Player2;
+
+	public GameObject FlyingEnemy;
+	public GameObject LandEnemy;
+
+
 	
 	static public GameCamera Cam;
 	
