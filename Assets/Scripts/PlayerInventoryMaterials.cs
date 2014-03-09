@@ -15,7 +15,6 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//Debug.Log (nbRoche);
 		TexteRoche.text = nbRoche+"/"+gameObject.GetComponent <NonPhysicsPlayerController>().GetNeededItems("Roche");
 		TexteBois.text = nbBois+"/"+gameObject.GetComponent <NonPhysicsPlayerController>().GetNeededItems("Bois");
 		TexteOs.text = nbOs+"/"+gameObject.GetComponent <NonPhysicsPlayerController>().GetNeededItems("Os");
@@ -33,6 +32,7 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbRoche++;
 					nbItem++;
+					gameObject.GetComponent<NonPhysicsPlayerController>().setItems("Roche", nbRoche);
 				}
 			break;
 			case "Bois" :
@@ -40,6 +40,7 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbBois++;
 					nbItem++;
+					gameObject.GetComponent<NonPhysicsPlayerController>().setItems("Bois", nbBois);
 				}
 				break;
 			case "Os" :
@@ -47,6 +48,7 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbOs++;
 					nbItem++;
+					gameObject.GetComponent<NonPhysicsPlayerController>().setItems("Os", nbOs);
 				}
 				break;
 			case "Metal" : 
@@ -54,6 +56,7 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbMetal++;
 					nbItem++;
+					gameObject.GetComponent<NonPhysicsPlayerController>().setItems("Metal", nbMetal);
 				}
 				break;
 			case "Plume" : 
@@ -61,6 +64,7 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbPlume++;
 					nbItem++;
+					gameObject.GetComponent<NonPhysicsPlayerController>().setItems("Plume", nbPlume);
 				}
 				break;
 			case "Liane" : 
@@ -68,19 +72,9 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 				{
 					nbLiane++;
 					nbItem++;
+					gameObject.GetComponent<NonPhysicsPlayerController>().setItems("Liane", nbLiane);
 				}
 				break;
-		}
-	}
-
-	public bool UseItem()
-	{
-		if(nbItem==0)
-			return false;
-		else
-		{
-			gameObject.GetComponent <NonPhysicsPlayerController>().GetItems(nbRoche, nbBois, nbOs, nbMetal, nbPlume, nbLiane);
-			return true;
 		}
 	}
 
