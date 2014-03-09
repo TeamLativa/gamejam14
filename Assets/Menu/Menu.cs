@@ -21,20 +21,20 @@ public class Menu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetButtonDown("Start") && !onControlsScreen){
+		if(Input.GetButtonDown("Startbutton") && !onControlsScreen){
 			Application.LoadLevel("Level");
 		}
 
-		if(Input.GetButtonDown("Y") && !onControlsScreen){
+		if(Input.GetButtonDown("Ybutton") && !onControlsScreen){
 			onControlsScreen = true;
 			MenuSpriteRenderer.sprite = ControlsMenuSprite;
 		}
 
-		if(Input.GetButtonDown("B") && onControlsScreen){
+		if(Input.GetButtonDown("Bbutton") && onControlsScreen){
 			MenuSpriteRenderer.sprite = MainMenuSprite;
 			onControlsScreen = false;
 		}
 
-
+		PressStart.renderer.enabled = Controls.renderer.enabled = !onControlsScreen;
 	}
 }

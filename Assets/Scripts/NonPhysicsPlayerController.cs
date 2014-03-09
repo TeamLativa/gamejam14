@@ -47,8 +47,14 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	private float jumpTimer = 0.0f;
 	private float baseJumpHeight;
 
+
+	public float StunRate = 0.5f;
+	private float canStun = -1;
+
 	private bool onTotem;
 	private GameObject winner;
+
+
 
 	public bool IsStunned(){
 		return stunned;
@@ -81,7 +87,9 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void onTriggerEnterEvent( Collider2D col )
 	{
+
 		//Debug.Log( "onTriggerEnterEvent: " + col.gameObject.name );
+
 		if ( col.gameObject.tag == "ProjectileStunning")
 		{
 			col.gameObject.GetComponent<StunningProjectile>().Collision(gameObject);
@@ -92,6 +100,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 			col.gameObject.GetComponent<FlyingEnemyProj>().Collision(gameObject);
 		}
 
+
 		if (col.gameObject.tag == "Totem") 
 		{
 			onTotem= true;
@@ -99,14 +108,17 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	}
 
 
+
+
 	void onTriggerExitEvent( Collider2D col )
 	{
-		
+
 		if (col.gameObject.tag == "Totem") 
 		{
 			onTotem= false;
 		}
 	//	Debug.Log( "onTriggerExitEvent: " + col.gameObject.name );
+
 	}
 
 	#endregion
@@ -127,10 +139,22 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		if(stunnedTimer <= 0.0f){
 			_animator.SetTrigger("NotStunned");
 			stunned = false;
+
 		}
 
 		if(!stunned)
+		{
+			if (canStun > 0)
+			{
+				canStun -= Time.deltaTime;
+			}
 			HandleMovement();
+		}
+
+		if( Input.GetButtonDown ("Xbutton_"+PNumber)&& onTotem)
+		{
+			checkDroppingItemOnTotem();
+		}
 
 		if( Input.GetButtonDown ("Xbutton_"+PNumber)&& onTotem)
 		{
@@ -165,6 +189,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		if(stunnedTimer <= 0.0f){
 			_animator.SetTrigger("NotStunned");
 			stunned = false;
+
 		}
 		
 		// grab our current _velocity to use as a base for all calculations
@@ -222,10 +247,11 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	}
 	
 	void Stun(float stunTime){
-		if(!stunned) {
+		if(!stunned && canStun <= 0) {
 			_animator.SetTrigger("Stun");
 			stunned = true;
 			stunnedTimer = stunTime;
+			canStun = StunRate;
 		}
 	}
 	
