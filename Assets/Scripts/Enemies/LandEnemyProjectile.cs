@@ -21,7 +21,7 @@ public class LandEnemyProjectile : MonoBehaviour {
 		transform.position += Vector3.right * Time.deltaTime * MoveSpeed;
 	}
 	
-	void OnTriggerEnter2D(Collider2D coll){
+	void Collision(GameObject coll){
 		if(coll.gameObject.tag == "Player") {
 			coll.gameObject.SendMessage("Stun", StunTime);
 			Instantiate(CollisionParticule, coll.gameObject.transform.position, Quaternion.identity);
