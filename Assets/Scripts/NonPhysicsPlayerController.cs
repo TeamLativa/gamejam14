@@ -91,6 +91,11 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void onTriggerEnterEvent( Collider2D col )
 	{
+
+		if (col.gameObject.tag == "Totem") 
+		{
+			onTotem= true;
+		}
 		/*if ( col.gameObject.tag == "ProjectileStunning")
 		{
 			col.gameObject.GetComponent<StunningProjectile>().Collision(gameObject);
@@ -106,10 +111,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		col.gameObject.SendMessage("Collision", gameObject, SendMessageOptions.DontRequireReceiver);
 
 
-		if (col.gameObject.tag == "Totem") 
-		{
-			onTotem= true;
-		}
+
 	}
 
 
@@ -156,7 +158,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 		if( Input.GetButtonDown ("Xbutton_"+PNumber)&& onTotem)
 		{
-			Debug.Log (nbRoche);
+			Debug.Log ("DICK");
 			checkDroppingItemOnTotem();
 		}
 
@@ -261,12 +263,12 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	}
 	
 	void Stun(float stunTime){
-		if(!stunned && canStun <= 0) {
+		/*if(!stunned && canStun <= 0) {
 			_animator.SetTrigger("Stun");
 			stunned = true;
 			stunnedTimer = stunTime;
 			canStun = StunRate;
-		}
+		}*/
 	}
 	
 	public void ApplyBonusJump(float bonus, float time)
@@ -306,41 +308,30 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void checkDroppingItemOnTotem()
 	{
+
+		Debug.Log("MORE DICK");
 		//if(player got all items to add a part)
-		if((nbRoche==0)||(putRoche))
-		{
-			if((nbBois==0)||(putBois))
-			{
-				if((nbOs==0)||(putOs))
-				{
-					if((nbMetal==0)||(putMetal))
-					{
-						if((nbPlume==0)||(putPlume))
-						{
-							if(nbLiane>=neededLiane)
-							{	
-								if(!putLiane)
-								{
+
+		if(nbLiane>=neededLiane && !putLiane)
+			{	
+					
 									Instantiate(TotemPart1, SetPosition(false), Quaternion.identity);
 									putLiane = true;
 									removeOne("liane");
 									nbParts--;
-								}
-							}
-						}
-						else
-						{	
-							if((!putPlume) && (nbPlume>=neededPlume))
-							{	
+
+			}
+					
+			if((!putPlume) && (nbPlume>=neededPlume))
+				{	
 								Instantiate(TotemPart2, SetPosition(true), Quaternion.identity);
 								putPlume = true;
 								removeOne("plume");
 								nbParts--;
 							}
-						}
-					}
-					else
-					{	
+						
+					
+				
 						if((!putMetal) && (nbMetal>=neededMetal))
 						{
 							Instantiate(TotemPart3, SetPosition(false), Quaternion.identity);
@@ -348,10 +339,8 @@ public class NonPhysicsPlayerController : MonoBehaviour
 							removeOne("metal");
 							nbParts--;
 						}
-					}
-				}
-				else
-				{	
+					
+			
 					if((!putOs) && (nbOs>=neededOs))
 					{
 						Instantiate(TotemPart4, SetPosition(false), Quaternion.identity);
@@ -359,10 +348,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 						removeOne("os");
 						nbParts--;
 					}
-				}
-			}
-			else
-			{	
+			
 				if((!putBois) && (nbBois>=neededBois))
 				{
 					Instantiate(TotemPart5, SetPosition(false), Quaternion.identity);
@@ -370,10 +356,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 					removeOne("bois");
 					nbParts--;
 				}
-			}
-		}
-		else
-		{	
+
 
 			if((!putRoche) && (nbRoche>=neededRoche))
 			{
@@ -382,7 +365,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 				removeOne("roche");
 				nbParts--;
 			}
-		}
+
 		
 		if((putRoche)&&(putBois)&&(putOs)&&(putMetal)&&(putPlume)&&(putLiane))
 		{
@@ -520,13 +503,13 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	{
 		switch(tag)
 		{
-		case "Roche": return new Vector2(-GameObject.FindWithTag("Roche").transform.position.x,GameObject.FindWithTag("Roche").transform.position.y); break;
-		case "Bois": return new Vector2(-GameObject.FindWithTag("Bois").transform.position.x,GameObject.FindWithTag("Bois").transform.position.y); break;
-		case "Os": return new Vector2(-GameObject.FindWithTag("Os").transform.position.x,GameObject.FindWithTag("Os").transform.position.y);break;
-		case "Metal": return new Vector2(-GameObject.FindWithTag("Metal").transform.position.x,GameObject.FindWithTag("Metal").transform.position.y);break;
+		case "Roche": return new Vector2(-GameObject.FindWithTag("TRoche").transform.position.x,GameObject.FindWithTag("TRoche").transform.position.y); break;
+		case "Bois": return new Vector2(-GameObject.FindWithTag("TBois").transform.position.x,GameObject.FindWithTag("TBois").transform.position.y); break;
+		case "Os": return new Vector2(-GameObject.FindWithTag("TOs").transform.position.x,GameObject.FindWithTag("TOs").transform.position.y);break;
+		case "Metal": return new Vector2(-GameObject.FindWithTag("TMetal").transform.position.x,GameObject.FindWithTag("TMetal").transform.position.y);break;
 		case "PlumeG": return new Vector2(-GameObject.FindWithTag("PlumeG").transform.position.x,GameObject.FindWithTag("PlumeG").transform.position.y);break;
 		case "PlumeD": return new Vector2(-GameObject.FindWithTag("PlumeD").transform.position.x,GameObject.FindWithTag("PlumeD").transform.position.y);break;
-		case "Liane": return new Vector2(-GameObject.FindWithTag("Liane").transform.position.x,GameObject.FindWithTag("Liane").transform.position.y);break;
+		case "Liane": return new Vector2(-GameObject.FindWithTag("TLiane").transform.position.x,GameObject.FindWithTag("TLiane").transform.position.y);break;
 		default : return new Vector2(5,5);break;
 		}
 	}

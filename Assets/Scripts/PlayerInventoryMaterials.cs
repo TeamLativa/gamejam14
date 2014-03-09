@@ -25,7 +25,7 @@ public class PlayerInventoryMaterials : MonoBehaviour {
 
 	public void AddItem(GameObject item)
 	{
-		switch(item.name)
+		switch(item.tag)
 		{
 			case "Roche" : 
 				if (nbRoche<3)
