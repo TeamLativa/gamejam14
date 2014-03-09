@@ -10,7 +10,13 @@ public class LandEnemyProjectile : MonoBehaviour {
 	public float TimeToLive = 3.0f;
 	private float lifeTimer = 0.0f;
 	public float MoveSpeed = 4.0f;
-	
+
+	void Update(){
+		lifeTimer += Time.deltaTime;
+		if(lifeTimer >= TimeToLive)
+			Destroy(gameObject);
+	}
+
 	void FixedUpdate(){
 		transform.position += Vector3.right * Time.deltaTime * MoveSpeed;
 	}
