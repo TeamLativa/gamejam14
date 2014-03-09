@@ -77,13 +77,65 @@ public class PlayerController : MonoBehaviour {
 		grounded = Physics2D.Linecast (transform.position, groundCheck.position, 1 << LayerMask.NameToLayer ("Ground")) || Physics2D.Linecast (transform.position, groundCheck.position, 1 << LayerMask.NameToLayer ("Platforms"));
 		if((Input.GetButtonDown("Abutton_"+PNumber) || Input.GetButtonDown("LeftBumper_"+PNumber)) && grounded && !stunned)
 			jump = true;
-		groundedOnTotemSpot = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Totem")); 
-		if((Input.GetButtonDown("Xbutton_"+PNumber)&& groundedOnTotemSpot && !stunned))
+
+
+	VerifySpeedTimer();
+	VerifyJumpTimer();
+}
+	void OnTriggerEnter( Collider col )
+	{
+		Debug.Log( "onTriggerEnterEvent: ");
+		/*if (col.gameObject.tag == "Totem")
+			checkDroppingItemOnTotem ();
+*/
+	}
+
+// Update is called once per frame
+void FixedUpdate () {
+	
+	
+	//drop component for totem
+	if(!stunned){
+		HandleMovement();
+	}
+	
+	// If the player should jump...
+	if(jump)
+	{
+		// Add a vertical force to the player.
+			rigidbody2D.AddForce(new Vector2(0f, JumpHeight));
+
+			anim.SetTrigger("Jump");
+			
+			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
+			jump = false;
+		}
+
+	}
+
+	void HandleMovement(){
+		//Input
+
+		float axisH = Input.GetAxisRaw ("LeftAnalogX_"+PNumber);
+
+		anim.SetFloat("Speed", Mathf.Abs(axisH));
+
+		if (Mathf.Abs(axisH)>0.05)
+		{
+			targetSpeed = axisH * Speed;
+
+			//Set Amount to move
+			amountToMove.x = targetSpeed; 
+			//rigidbody2D.AddForce(amountToMove);
+			transform.position += new Vector3(targetSpeed, 0, 0) * Time.deltaTime;
+		}
+	}
+	void checkDroppingItemOnTotem()
+	{
+		if(Input.GetButtonDown("Xbutton_"+PNumber))
 		{
 			gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
-
-			Debug.Log (nbRoche);
-
+			
 			//if(player got all items to add a part)
 			if((nbRoche==0)||(putRoche))
 			{
@@ -166,201 +218,26 @@ public class PlayerController : MonoBehaviour {
 				
 				GameObject part;
 				part = (GameObject)Instantiate(TotemPart6, GetPosition ("Roche"), Quaternion.identity);
-				Flip ();
+				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
 				part = (GameObject)Instantiate(TotemPart5, GetPosition ("Bois"), Quaternion.identity);
-				Flip ();
+				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
 				part = (GameObject)Instantiate(TotemPart4, GetPosition ("Os"), Quaternion.identity);
-				Flip ();
+				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
 				part = (GameObject)Instantiate(TotemPart3, GetPosition ("Metal"), Quaternion.identity);
-				Flip ();
+				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
 				part = (GameObject)Instantiate(TotemPart2, GetPosition ("Plume"), Quaternion.identity);
-				Flip ();
+				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
 				part = (GameObject)Instantiate(TotemPart1, GetPosition ("Liane"), Quaternion.identity);
-				Flip ();
-			}
-		}
-
-	VerifySpeedTimer();
-	VerifyJumpTimer();
-}
-
-// Update is called once per frame
-void FixedUpdate () {
-	
-	
-	//drop component for totem
-	if(!stunned){
-		HandleMovement();
-	}
-	
-	// If the player should jump...
-	if(jump)
-	{
-		// Add a vertical force to the player.
-			rigidbody2D.AddForce(new Vector2(0f, JumpHeight));
-
-			anim.SetTrigger("Jump");
-			
-			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
-			jump = false;
-		}
-
-	}
-
-	void HandleMovement(){
-		//Input
-
-		float axisH = Input.GetAxisRaw ("LeftAnalogX_"+PNumber);
-
-		anim.SetFloat("Speed", Mathf.Abs(axisH));
-
-		if (Mathf.Abs(axisH)>0.05)
-		{
-			targetSpeed = axisH * Speed;
-
-			//Set Amount to move
-			amountToMove.x = targetSpeed; 
-			//rigidbody2D.AddForce(amountToMove);
-			transform.position += new Vector3(targetSpeed, 0, 0) * Time.deltaTime;
-		}
-
-		if(axisH > 0 && !facingRight){
-			Flip();
-		}
-		else if(axisH < 0 && facingRight){
-			Flip();
-		}
-	}
-		/*
-	void OnCollisionEnter2D(Collision2D collision)
-	{
-		if(!stunned) 
-		{
-			if(Input.GetButtonDown("Xbutton_"+PNumber))
-			{
-				gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
-
-			}
-				if ((collision.gameObject.tag == "Ground") || (collision.gameObject.tag == "PlatformTop")
-			    || (collision.gameObject.tag == "PlatformTotem")) 
-			{
-				if(collision.gameObject.tag == "PlatformTotem")
-				{
-					if(Input.GetButtonDown("Xbutton_"+PNumber))
-					{
-						gameObject.GetComponent<PlayerInventoryMaterials>().UseItem();
-
-						//if(player got all items to add a part)
-						if((nbRoche==0)||(putRoche))
-						{
-							if((nbBois==0)||(putBois))
-							{
-								if((nbOs==0)||(putOs))
-								{
-									if((nbMetal==0)||(putMetal))
-									{
-										if((nbPlume==0)||(putPlume))
-										{
-											if(nbLiane!=0)
-											{	
-												if(!putLiane)
-												{
-													Instantiate(TotemPart1, SetPosition(false), Quaternion.identity);
-													putLiane = true;
-													removeOne("liane");
-													nbParts--;
-												}
-											}
-										}
-										else
-										{	
-											if(!putPlume)
-											{	
-												Instantiate(TotemPart2, SetPosition(true), Quaternion.identity);
-												putPlume = true;
-												removeOne("plume");
-												nbParts--;
-											}
-										}
-									}
-									else
-									{	
-										if(!putMetal)
-										{
-											Instantiate(TotemPart3, SetPosition(false), Quaternion.identity);
-											putMetal = true;
-											removeOne("metal");
-											nbParts--;
-										}
-									}
-								}
-								else
-								{	
-									if(!putOs)
-									{
-										Instantiate(TotemPart4, SetPosition(false), Quaternion.identity);
-										putOs = true;
-										removeOne("os");
-										nbParts--;
-									}
-								}
-							}
-							else
-							{	
-								if(!putBois)
-								{
-									Instantiate(TotemPart5, SetPosition(false), Quaternion.identity);
-									putBois = true;
-									removeOne("bois");
-									nbParts--;
-								}
-							}
-						}
-						else
-						{	
-							if(!putRoche)
-							{
-								Instantiate(TotemPart6, SetPosition(false), Quaternion.identity);
-								putRoche = true;
-								removeOne("roche");
-								nbParts--;
-							}
-						}
-
-						if((putRoche)&&(putBois)&&(putOs)&&(putMetal)&&(putPlume)&&(putLiane))
-						{
-
-							GameObject part;
-							part = (GameObject)Instantiate(TotemPart6, GetPosition ("Roche"), Quaternion.identity);
-							Flip ();
-							part = (GameObject)Instantiate(TotemPart5, GetPosition ("Bois"), Quaternion.identity);
-							Flip ();
-							part = (GameObject)Instantiate(TotemPart4, GetPosition ("Os"), Quaternion.identity);
-							Flip ();
-							part = (GameObject)Instantiate(TotemPart3, GetPosition ("Metal"), Quaternion.identity);
-							Flip ();
-							part = (GameObject)Instantiate(TotemPart2, GetPosition ("Plume"), Quaternion.identity);
-							Flip ();
-							part = (GameObject)Instantiate(TotemPart1, GetPosition ("Liane"), Quaternion.identity);
-							Flip ();
-						}
-					}
-				}
-
-				if(Input.GetButtonDown("Abutton_"+PNumber))
-				{
-					rigidbody2D.AddForce(Vector3.up * JumpHeight);
-					
-				}
+				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
 			}
 		}
 	}
-*/
-	void Flip(){
-		facingRight = !facingRight;
-		Vector3 scale = transform.localScale;
+	
+	Vector3 FlipTotem(Vector3 currentScale){
+		
+		Vector3 scale = currentScale;
 		scale.x *= -1;
-		transform.localScale = scale;
+		return scale;
 	}
 
 	public int facingSideInt(){
