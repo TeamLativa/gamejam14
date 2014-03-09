@@ -72,6 +72,7 @@ public class LandEnemy : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll){
+
 		if(coll.gameObject.tag == "Wall" || coll.gameObject.tag == "PlatformSide" || coll.gameObject.tag == "Player"){
 			if(coll.gameObject != lastCollidedWall){
 				lastCollidedWall = coll.gameObject;
@@ -84,18 +85,6 @@ public class LandEnemy : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D coll){
-		if(coll.gameObject.tag == "Wall" || coll.gameObject.tag == "PlatformSide" || coll.gameObject.tag == "Player"){
-			if(coll.gameObject != lastCollidedWall){
-				lastCollidedWall = coll.gameObject;
-				direction = -direction;
-				Flip();
-			}
-			if(coll.gameObject.tag == "Player"){
-				coll.gameObject.SendMessage("Stun", PlayerStunTime);
-			}
-		}
-	}
 
 	void Flip(){
 		Vector3 scale = transform.localScale;
@@ -106,7 +95,7 @@ public class LandEnemy : MonoBehaviour {
 	void HandleFire(){
 		fireTimer += Time.deltaTime;
 		
-		if(fireTimer >= FireRate){
+		if(fireTimer >= FireRate){ 
 
 			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 

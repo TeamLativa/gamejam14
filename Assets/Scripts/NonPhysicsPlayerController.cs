@@ -60,6 +60,9 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		_controller.onControllerCollidedEvent += onControllerCollider;
 		_controller.onTriggerEnterEvent += onTriggerEnterEvent;
 		_controller.onTriggerExitEvent += onTriggerExitEvent;
+
+		baseSpeed = runSpeed;
+		baseJumpHeight = jumpHeight;
 	}
 
 
@@ -67,12 +70,10 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void onControllerCollider( RaycastHit2D hit )
 	{
-		// bail out on plain old ground hits cause they arent very interesting
 		if( hit.normal.y == 1f )
 			return;
 
-		// logs any collider hits if uncommented. it gets noisy so it is commented out for the demo
-		//Debug.Log( "flags: " + _controller.collisionState + ", hit.normal: " + hit.normal );
+
 	}
 
 
@@ -92,7 +93,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	#endregion
 
 
-	// the Update loop contains a very simple example of moving the character around and controlling the animation
+
 	void Update()
 	{
 		if (Input.GetAxis("LeftTrigger_"+ PNumber) > 0.5)
