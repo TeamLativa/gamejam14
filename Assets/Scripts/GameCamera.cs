@@ -10,18 +10,26 @@ public class GameCamera : MonoBehaviour {
 	private float maxSize = 12f;
 	private float maxY = 6f;
 
-	// Set target
-	public void SetTarget(Transform t, Transform t2) {
-		target = t;
-		target2 = t2;
+	public GameObject Player1;
+	public GameObject Player2;
+	public GameObject Ground;
+
+	void Awake(){
+		target = Player1.transform;
+		target2 = Player2.transform;
 	}
+
 	
 	// Track target
 	void LateUpdate() {
 		if ((target)&&(target2)) {
 			float y;
 
-			Vector2 dist = target2.transform.position-target.transform.position;
+			Vector2 distPlayer1 = target.transform.position-Ground.transform.position;
+			Vector2 distPlayer2 = target2.transform.position-Ground.transform.position;
+
+			Vector2 dist = (distPlayer1.magnitude > distPlayer2.magnitude) ? distPlayer1 : distPlayer2;
+
 			dist.x = Mathf.Abs (dist.x);
 			dist.y = Mathf.Abs (dist.y);
 
@@ -51,7 +59,7 @@ public class GameCamera : MonoBehaviour {
 		}
 	}
 	
-	// Increase n towards target by speed
+	// Increase n towards target by speed 
 	private float IncrementTowards(float n, float target, float a) {
 		if (n == target) {
 			return n;	
