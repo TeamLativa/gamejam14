@@ -175,7 +175,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		
 		
 		// we can only jump whilst grounded
-		if( _controller.isGrounded && Input.GetButtonDown("Abutton_"+PNumber) )
+		if( _controller.isGrounded && (Input.GetButtonDown("Abutton_"+PNumber) || Input.GetButtonDown("LeftBumper_" + PNumber)))
 		{
 			_velocity.y = Mathf.Sqrt( 2f * jumpHeight * -gravity );
 			_animator.SetTrigger("Jump");
