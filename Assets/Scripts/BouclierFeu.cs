@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class BouclierFeu : MonoBehaviour {
-	
+	public float Damage;
 	// Use this for initialization
 	void Start () {
 		Destroy(gameObject, 10.0f);
@@ -24,5 +24,10 @@ public class BouclierFeu : MonoBehaviour {
 		{
 			coll.gameObject.SendMessage("Stun",2.0f);
 		}
+
+		if (coll.gameObject.tag == "Enemy")
+		{
+			coll.gameObject.SendMessage("TakeDamage", Damage);
+        }
 	}
 }
