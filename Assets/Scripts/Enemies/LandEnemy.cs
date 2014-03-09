@@ -54,6 +54,11 @@ public class LandEnemy : MonoBehaviour {
 	
 	void HandleMovement(){
 		rigidbody2D.velocity = new Vector2(MovementSpeed * direction.x, rigidbody2D.velocity.y);
+		ClampAngle();
+	}
+
+	void ClampAngle(){
+
 	}
 
 	void HandleReverseTimer(){

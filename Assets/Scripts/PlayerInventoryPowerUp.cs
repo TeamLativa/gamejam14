@@ -32,41 +32,41 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 
 	public void AddPowerUp(GameObject pUp){
 		if(nbPowerUp == 0){
-			powerUp1 = pUp.name;
+			powerUp1 = pUp.tag;
 			nbPowerUp++;
 
-			if(pUp.name == "ForcePowerUp")
+			if(pUp.tag == "ForcePowerUp")
 				rendererPU1.texture = ForceSprite;
-			if(pUp.name == "BouclierPowerUp")
+			if(pUp.tag == "BouclierPowerUp")
 				rendererPU1.texture = BouclierSprite;
-			if(pUp.name == "VitessePowerUp")
+			if(pUp.tag == "VitessePowerUp")
 				rendererPU1.texture = VitesseSprite;
 
 			return;
 		}
 		if(nbPowerUp == 1){
-			powerUp2 = pUp.name;
+			powerUp2 = pUp.tag;
 			nbPowerUp++;
 
-			if(pUp.name == "ForcePowerUp")
+			if(pUp.tag == "ForcePowerUp")
 				rendererPU2.texture = ForceSprite;
-			if(pUp.name == "BouclierPowerUp")
+			if(pUp.tag == "BouclierPowerUp")
 				rendererPU2.texture = BouclierSprite;
-			if(pUp.name == "VitessePowerUp")
+			if(pUp.tag == "VitessePowerUp")
 				rendererPU2.texture = VitesseSprite;
 
 			return;
 		}
 		if(nbPowerUp == 2){
 			powerUp1 = powerUp2;
-			powerUp2 = pUp.name;
+			powerUp2 = pUp.tag;
 
 			rendererPU1.texture = rendererPU2.texture;
-			if(pUp.name == "ForcePowerUp")
+			if(pUp.tag == "ForcePowerUp")
 				rendererPU2.texture = ForceSprite;
-			if(pUp.name == "BouclierPowerUp")
+			if(pUp.tag == "BouclierPowerUp")
 				rendererPU2.texture = BouclierSprite;
-			if(pUp.name == "VitessePowerUp")
+			if(pUp.tag == "VitessePowerUp")
 				rendererPU2.texture = VitesseSprite;
 
 			return;
@@ -74,6 +74,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 
 	public bool ConsumePowerUps(){
+		Debug.Log (nbPowerUp);
 		if(nbPowerUp == 0)
 			return false;
 		else
@@ -134,7 +135,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUBouclier()
 	{
-		int side = gameObject.GetComponent<PlayerController>().facingSideInt();
+		int side = gameObject.GetComponent<NonPhysicsPlayerController>().facingSideInt();
 
 		GameObject bouclier = (GameObject)Instantiate(BouclierDevantSimple);
 		bouclier.transform.parent = gameObject.transform;
@@ -146,7 +147,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUVitesse()
 	{
-		gameObject.GetComponent<PlayerController>().ApplyBonusSpeed(1.5f,6.0f);
+		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusSpeed(1.5f,6.0f);
 	}
 	private void PUForceForce()
 	{
@@ -154,7 +155,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUForceBouclier()
 	{
-		int side = gameObject.GetComponent<PlayerController>().facingSideInt();
+		int side = gameObject.GetComponent<NonPhysicsPlayerController>().facingSideInt();
 		
 		GameObject bouclier = (GameObject)Instantiate(BouclierFire);
 		bouclier.transform.parent = gameObject.transform;
@@ -166,7 +167,7 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUForceVitesse()
 	{
-		gameObject.GetComponent<PlayerController>().ApplyBonusSpeed(1.5f,10.0f);
+		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusSpeed(1.5f,10.0f);
 		gameObject.GetComponentInChildren<Gun>().ApplyBonusFireRate(0.75f,10.0f);
 	}
 	private void PUBouclierBouclier()
@@ -174,11 +175,11 @@ public class PlayerInventoryPowerUp : MonoBehaviour {
 	}
 	private void PUBouclierVitesse()
 	{
-		gameObject.GetComponent<PlayerController>().ApplyBonusSpeed(1.5f,6.0f);
-		gameObject.GetComponent<PlayerController>().ApplyBonusJump(2.0f,6.0f);
+		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusSpeed(1.5f,6.0f);
+		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusJump(2.0f,6.0f);
 	}
 	private void PUVitesseVitesse()
 	{
-		gameObject.GetComponent<PlayerController>().ApplyBonusSpeed(3.0f,6.0f);
+		gameObject.GetComponent<NonPhysicsPlayerController>().ApplyBonusSpeed(3.0f,6.0f);
 	}
 }
