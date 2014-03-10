@@ -33,7 +33,6 @@ public class Projectile : MonoBehaviour {
 	{
 		if (coll.gameObject.tag == "Enemy")
 		{
-			Debug.Log("Do Ouch");
 			coll.gameObject.SendMessage("TakeDamage", Damage);
 			Destroy(gameObject);
 		}

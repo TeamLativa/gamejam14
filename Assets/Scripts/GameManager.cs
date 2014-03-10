@@ -65,8 +65,10 @@ public class GameManager : MonoBehaviour {
 			Instantiate(OrangePlayerWon, new Vector3(0,0,0), Quaternion.identity);
 		else
 			Instantiate(BluePlayerWon, new Vector3(0,0,0), Quaternion.identity);
+	}
 
-		Debug.Log ("Player: " + winnerPlayer + " won!");
+	public bool IsGameOver(){
+		return gameIsOver;
 	}
 
 	void HandleEnemySpawn(){
@@ -75,13 +77,13 @@ public class GameManager : MonoBehaviour {
 		
 		if(flyingEnemyTimer >= FlyingEnemySpawnTimer){
 			// Spawn FlyingEnemy
-			GameObject flyEnmy = (GameObject) Instantiate(FlyingEnemy, new Vector3(-18.0f, -18.0f), Quaternion.identity);
+			Instantiate(FlyingEnemy, new Vector3(-18.0f, -18.0f), Quaternion.identity);
 			flyingEnemyTimer = 0.0f;
 		}
 		
 		if(landEnemyTimer >= LandEnemySpawnTimer){
 			// Spawn LandEnemy
-			GameObject landEnmy = (GameObject) Instantiate(LandEnemy, new Vector3(-18.0f, -18.0f), Quaternion.identity);
+			Instantiate(LandEnemy, new Vector3(-18.0f, -18.0f), Quaternion.identity);
 			landEnemyTimer = 0.0f;
 		}
 	}

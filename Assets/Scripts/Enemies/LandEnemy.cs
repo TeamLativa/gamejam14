@@ -106,8 +106,7 @@ public class LandEnemy : MonoBehaviour {
 			if((target.position - transform.position).magnitude <= FireDistance){
 				Vector3 relative = target.position - transform.position;
 				float targetAngle = Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg;
-				Debug.Log(targetAngle);
-				GameObject proj = (GameObject) Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, targetAngle));
+				Instantiate(Projectile, transform.position, Quaternion.Euler(0, 0, targetAngle));
 				fireTimer = 0.0f;
 			}
 		}

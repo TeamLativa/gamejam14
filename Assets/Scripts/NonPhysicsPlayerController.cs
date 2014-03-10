@@ -10,6 +10,7 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	public float groundDamping = 20f; // how fast do we change direction? higher means faster
 	public float inAirDamping = 5f;
 	public float jumpHeight = 3f;
+	private bool jump = false;
 
 	[HideInInspector]
 	private float normalizedHorizontalSpeed = 0;
@@ -27,6 +28,8 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	public GameObject TotemPart4;
 	public GameObject TotemPart5;
 	public GameObject TotemPart6;
+
+	public GameObject FullTotem;
 
 
 	private int nbRoche, nbBois,nbOs,nbMetal,nbPlume,nbLiane;
@@ -156,13 +159,16 @@ public class NonPhysicsPlayerController : MonoBehaviour
 			{
 				canStun -= Time.deltaTime;
 			}
-			HandleMovement();
 		}
 
 		if( Input.GetButtonDown ("Xbutton_"+PNumber)&& onTotem)
 		{
-			Debug.Log ("DICK");
 			checkDroppingItemOnTotem();
+		}
+
+		if( _controller.isGrounded && (Input.GetButtonDown("Abutton_"+PNumber) || Input.GetButtonDown("LeftBumper_" + PNumber)))
+		{
+			jump = true;
 		}
 
 		VerifySpeedTimer();
@@ -170,6 +176,13 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 		checkItemCompleted ();
 		checkWinner ();
+	}
+
+	void FixedUpdate(){
+		if(!stunned)
+		{
+			HandleMovement();
+		}
 	}
 
 	void HandleFlashing(){
@@ -241,10 +254,11 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		
 		
 		// we can only jump whilst grounded
-		if( _controller.isGrounded && (Input.GetButtonDown("Abutton_"+PNumber) || Input.GetButtonDown("LeftBumper_" + PNumber)))
+		if(jump)
 		{
 			_velocity.y = Mathf.Sqrt( 2f * jumpHeight * -gravity );
 			_animator.SetTrigger("Jump");
+			jump = false;
 		}
 		
 		
@@ -253,11 +267,11 @@ public class NonPhysicsPlayerController : MonoBehaviour
 		_velocity.x = Mathf.Lerp( _velocity.x, normalizedHorizontalSpeed * runSpeed, Time.deltaTime * smoothedMovementFactor );
 		
 		// apply gravity before moving
-		_velocity.y += gravity * Time.deltaTime;
+		_velocity.y += gravity * Time.fixedDeltaTime;
 
 		_animator.SetFloat("Speed", Mathf.Abs (_velocity.x));
 
-		_controller.move( _velocity * Time.deltaTime );
+		_controller.move( _velocity * Time.fixedDeltaTime );
 
 	}
 
@@ -313,92 +327,75 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void checkDroppingItemOnTotem()
 	{
-
-		Debug.Log("MORE DICK");
-		//if(player got all items to add a part)
-
 		if(nbLiane>=neededLiane && !putLiane)
-			{	
-					
-									Instantiate(TotemPart1, SetPosition(false), Quaternion.identity);
-									putLiane = true;
-									removeOne("liane");
-									nbParts--;
-
-			}
-					
-			if((!putPlume) && (nbPlume>=neededPlume))
-				{	
-								Instantiate(TotemPart2, SetPosition(true), Quaternion.identity);
-								putPlume = true;
-								removeOne("plume");
-								nbParts--;
-							}
-						
-					
+		{	
 				
-						if((!putMetal) && (nbMetal>=neededMetal))
-						{
-							Instantiate(TotemPart3, SetPosition(false), Quaternion.identity);
-							putMetal = true;
-							removeOne("metal");
-							nbParts--;
-						}
+			Instantiate(TotemPart1, SetPosition(false), Quaternion.identity);
+			putLiane = true;
+			removeOne("liane");
+			nbParts--;
+
+		}
 					
+		if((!putPlume) && (nbPlume>=neededPlume))
+		{	
+			Instantiate(TotemPart2, SetPosition(true), Quaternion.identity);
+			putPlume = true;
+			removeOne("plume");
+			nbParts--;
+		}					
 			
-					if((!putOs) && (nbOs>=neededOs))
-					{
-						Instantiate(TotemPart4, SetPosition(false), Quaternion.identity);
-						putOs = true;
-						removeOne("os");
-						nbParts--;
-					}
-			
-				if((!putBois) && (nbBois>=neededBois))
-				{
-					Instantiate(TotemPart5, SetPosition(false), Quaternion.identity);
-					putBois = true;
-					removeOne("bois");
-					nbParts--;
-				}
-
-
-			if((!putRoche) && (nbRoche>=neededRoche))
-			{
-				Instantiate(TotemPart6, SetPosition(false), Quaternion.identity);
-				putRoche = true;
-				removeOne("roche");
-				nbParts--;
-			}
+		if((!putMetal) && (nbMetal>=neededMetal))
+		{
+			Instantiate(TotemPart3, SetPosition(false), Quaternion.identity);
+			putMetal = true;
+			removeOne("metal");
+			nbParts--;
+		}
+		
+		if((!putOs) && (nbOs>=neededOs))
+		{
+			Instantiate(TotemPart4, SetPosition(false), Quaternion.identity);
+			putOs = true;
+			removeOne("os");
+			nbParts--;
+		}
+		
+		if((!putBois) && (nbBois>=neededBois))
+		{
+			Instantiate(TotemPart5, SetPosition(false), Quaternion.identity);
+			putBois = true;
+			removeOne("bois");
+			nbParts--;
+		}
+	
+		if((!putRoche) && (nbRoche>=neededRoche))
+		{
+			Instantiate(TotemPart6, SetPosition(false), Quaternion.identity);
+			putRoche = true;
+			removeOne("roche");
+			nbParts--;
+		}
 
 		
 		if((putRoche)&&(putBois)&&(putOs)&&(putMetal)&&(putPlume)&&(putLiane))
 		{
 
 			winner = this.gameObject;
-			
-			GameObject part;
-			part = (GameObject)Instantiate(TotemPart6, GetPosition ("Roche"), Quaternion.identity);
-			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-			part = (GameObject)Instantiate(TotemPart5, GetPosition ("Bois"), Quaternion.identity);
-			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-			part = (GameObject)Instantiate(TotemPart4, GetPosition ("Os"), Quaternion.identity);
-			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-			part = (GameObject)Instantiate(TotemPart3, GetPosition ("Metal"), Quaternion.identity);
-			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-			part = (GameObject)Instantiate(TotemPart1, GetPosition ("Liane"), Quaternion.identity);
-			part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
 
-			if(winner.name == "Player 1")
-			{
-				part = (GameObject)Instantiate(TotemPart2, GetPosition ("PlumeG"), Quaternion.identity);
-				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
+			ArrayList totemParts = new ArrayList();
+			totemParts.AddRange(GameObject.FindGameObjectsWithTag("TRoche"));
+			totemParts.AddRange(GameObject.FindGameObjectsWithTag("TBois"));
+			totemParts.AddRange(GameObject.FindGameObjectsWithTag("TLiane"));
+			totemParts.AddRange(GameObject.FindGameObjectsWithTag("TOs"));
+			totemParts.AddRange(GameObject.FindGameObjectsWithTag("TMetal"));
+			totemParts.AddRange(GameObject.FindGameObjectsWithTag("PlumeG"));
+			totemParts.AddRange(GameObject.FindGameObjectsWithTag("PlumeD"));
+			foreach (GameObject tPart in totemParts){
+				Destroy(tPart);
 			}
-			else if (winner.name=="Player 2")
-			{
-				part = (GameObject)Instantiate(TotemPart2, GetPosition ("PlumeD"), Quaternion.identity);
-				part.gameObject.transform.localScale = FlipTotem(part.gameObject.transform.localScale);
-			}
+
+			Instantiate(FullTotem, FullTotem.transform.position, Quaternion.identity);
 
 			loadGameOver(winner.name);
 			
@@ -508,14 +505,30 @@ public class NonPhysicsPlayerController : MonoBehaviour
 	{
 		switch(tag)
 		{
-		case "Roche": return new Vector2(-GameObject.FindWithTag("TRoche").transform.position.x,GameObject.FindWithTag("TRoche").transform.position.y); break;
-		case "Bois": return new Vector2(-GameObject.FindWithTag("TBois").transform.position.x,GameObject.FindWithTag("TBois").transform.position.y); break;
-		case "Os": return new Vector2(-GameObject.FindWithTag("TOs").transform.position.x,GameObject.FindWithTag("TOs").transform.position.y);break;
-		case "Metal": return new Vector2(-GameObject.FindWithTag("TMetal").transform.position.x,GameObject.FindWithTag("TMetal").transform.position.y);break;
-		case "PlumeG": return new Vector2(-GameObject.FindWithTag("PlumeG").transform.position.x,GameObject.FindWithTag("PlumeG").transform.position.y);break;
-		case "PlumeD": return new Vector2(-GameObject.FindWithTag("PlumeD").transform.position.x,GameObject.FindWithTag("PlumeD").transform.position.y);break;
-		case "Liane": return new Vector2(-GameObject.FindWithTag("TLiane").transform.position.x,GameObject.FindWithTag("TLiane").transform.position.y);break;
-		default : return new Vector2(5,5);break;
+		case "Roche": 
+			return new Vector2(-GameObject.FindWithTag("TRoche").transform.position.x,GameObject.FindWithTag("TRoche").transform.position.y); 
+			break;
+		case "Bois": 
+			return new Vector2(-GameObject.FindWithTag("TBois").transform.position.x,GameObject.FindWithTag("TBois").transform.position.y); 
+			break;
+		case "Os": 
+			return new Vector2(-GameObject.FindWithTag("TOs").transform.position.x,GameObject.FindWithTag("TOs").transform.position.y);
+			break;
+		case "Metal": 
+			return new Vector2(-GameObject.FindWithTag("TMetal").transform.position.x,GameObject.FindWithTag("TMetal").transform.position.y);
+			break;
+		case "PlumeG": 
+			return new Vector2(-GameObject.FindWithTag("PlumeG").transform.position.x,GameObject.FindWithTag("PlumeG").transform.position.y);
+			break;
+		case "PlumeD": 
+			return new Vector2(-GameObject.FindWithTag("PlumeD").transform.position.x,GameObject.FindWithTag("PlumeD").transform.position.y);
+			break;
+		case "Liane": 
+			return new Vector2(-GameObject.FindWithTag("TLiane").transform.position.x,GameObject.FindWithTag("TLiane").transform.position.y);
+			break;
+		default : 
+			return new Vector2(5,5);
+			break;
 		}
 	}
 
@@ -582,7 +595,9 @@ public class NonPhysicsPlayerController : MonoBehaviour
 
 	void loadGameOver(string winner)
 	{
+		GameManager gmMgr = GameObject.FindGameObjectWithTag ("MainCamera").gameObject.GetComponent<GameManager> ();
 		int winnerId = (winner == "Player 1") ? 1 : 2;
-		GameObject.FindGameObjectWithTag ("MainCamera").gameObject.GetComponent<GameManager> ().SetGameOver(winnerId);
+		if(!gmMgr.IsGameOver())
+			gmMgr.SetGameOver(winnerId);
 	}
 }
